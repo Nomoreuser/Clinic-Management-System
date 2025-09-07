@@ -1,0 +1,76 @@
+body{
+    height: 100dvh;
+    width: 100vw;
+    margin:0;
+    padding: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+div:nth-child(1){
+    background-color: rgb(255, 255, 255);
+    height: 100%;
+    width: 30%;
+    animation: zoomout 1s ease-in;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+div:nth-child(2){
+    width: 30%;
+    opacity: 0;
+    animation: pop .5s ease-in forwards;
+    animation-delay: 1s;
+}
+img{
+    height: 80%;
+    width: auto;
+}
+
+@keyframes zoomout {
+    0%{
+        transform: scale(4);
+        position: absolute;
+        
+    }75%{
+        transform: scale(1);
+        position: absolute;
+    }100%{
+        transform: scale(1);
+        position: relative;
+    }
+}
+@keyframes pop {
+    0%{
+        opacity: 0;
+    }100%{
+        opacity: 1;
+    }
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    gap: 5px
+}
+
+label{
+    font-size: 22px;
+}
+input{
+    font-size: 22px;
+    outline: none;
+    margin-bottom: 10px;
+}
+
+button{
+    font-size: 22px;
+}
+p{
+    text-align: center;
+}
