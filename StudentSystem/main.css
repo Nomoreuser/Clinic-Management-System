@@ -1,0 +1,35 @@
+body {
+    min-height: 100vh;
+    background: linear-gradient(
+        to right,
+        white 0%,
+        white 50%,
+        gray 50%,
+        gray 100%
+    );
+    margin: 0;  
+}
+
+#logo {
+    height: 700px;
+    width: 700px;
+    float: left;
+}
+
+.container {
+   float: right;
+   margin-top: 250px;
+   margin-right: 120px;
+   width: 500px;
+}
+
+#d1, #d2, #d3 {
+    background-color: white;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.form label {
+display: block;
+margin-bottom: 5px;
+}
