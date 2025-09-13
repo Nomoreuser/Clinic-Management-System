@@ -8,15 +8,17 @@
 </head>
 <body>
 
-    <h1>Clinic Item Management System</h1>
+    <h1>School Clinic Item's Management System</h1>
 
-    <div>
-        <h2>Please Enter your Student ID</h2>
-        <div class="stuID">
-            <input type="text" placeholder="eg.. 22-8324-654">
-            <button type="submit">🔍</button>
-        </div>
+    <div class="box">
+      <h2>Enter Student ID</h2>
+      <p>Please enter your valid student identifaction number to continue.
+      </p>
+      <input type="text" id="studentID" placeholder="eg.. 22-8324-654" maxlength="11">
+      <button type="submit" id="verifyID" onclick="Verify()">Verify Student</button>
     </div>
 
+
+    <script src="student.js"></script>
 </body>
 </html>
