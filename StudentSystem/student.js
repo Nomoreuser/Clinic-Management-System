@@ -10,3 +10,5 @@ function Verify(){
     window.location.href="main.html";
   }
 }
+
+const hi = "greet";
