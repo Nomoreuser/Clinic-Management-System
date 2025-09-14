@@ -1,24 +1,37 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
 body{
-  height: 100dvh;
+  height: 100vh;
   width: 100vw;
-  margin:0;
-  padding:0;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: #f1f7ff;
+  
+  background-image: url('img/author-6.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 h1{
   position: absolute;
   top: 0;
   text-align: center;
+  margin:0;
+  padding:15px;
+  background: linear-gradient(135deg,#3700d3,#4fa9ff91);
+  width:100%;
 }
 
 .box{
-  background-color: white;
+  background-color: rgba(255,255,255,0.5);
   padding: 15px;
   display: flex;
   flex-direction: column;
@@ -26,15 +39,16 @@ h1{
   border-radius: 8px;
   margin:0 10px;
 
-  box-shadow: 0 0 12px rgba(207, 230, 255, 0.8);
-
+  border: 1px solid rgba(255,255,255,0.3);
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(3px);
 }
 .box h2{
   margin:0 0 10px 0;
   text-align: center;
 }
 .box p{
-  color:#555;
+  color:#444;
   font-size: 16px;
   text-align: center;
   padding: 0 10px;
@@ -57,4 +71,68 @@ h1{
   align-self: center;
   padding: 9px 15px;
   border-radius: 5px;
+}
+
+
+
+.intro{
+  position: fixed;
+  height: 100%;
+  top:0;
+  left:0;
+  right:0;
+  background-color: transparent;
+  overflow: hidden;
+  
+  display: flex;
+  z-index: 10;
+  animation: remove 0.5s ease 1.5s forwards;
+}
+.intro div{
+  background-color: blue;
+  width: 50%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+.intro div:nth-child(1){
+  animation: slidel 1.5s ease-out forwards;
+}
+.intro div:nth-child(2){
+  animation: slider 1.5s ease-out forwards;
+}
+.intro div img{
+  height: 700px;
+  width: auto;
+}
+.intro div:nth-child(1) img{
+  position: absolute;
+  top:50%;
+  left:100%;
+  transform: translate(-50%,-50%);
+}
+.intro div:nth-child(2) img{
+  position: absolute;
+  top:50%;
+  left:0%;
+  transform: translate(-50%,-50%);
+}
+@keyframes slidel{
+  0%,50%{
+    transform: translateX(0);
+  }100%{
+    transform: translateX(-100%);
+  }
+}
+@keyframes slider{
+  0%,50%{
+    transform: translateX(0);
+  }100%{
+    transform: translateX(100%);
+  }
+}
+@keyframes remove{
+  to{
+    visibility: hidden;
+  }
 }

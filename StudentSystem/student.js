@@ -3,10 +3,9 @@
 function Verify(){
   if(studentID.value == ""){
     alert("Please enter your Student ID")
-  }
-  if(studentID.value.length < 11){
+  }else if(studentID.value.length < 11){
     alert("11 chars")
-  }if(studentID.value.length = 11){
+  }else{
     window.location.href="main.html";
   }
 }

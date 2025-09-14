@@ -7,15 +7,25 @@
     <link rel="stylesheet" href="student.css">
 </head>
 <body>
-
+  
     <h1>School Clinic Item's Management System</h1>
-
+    
     <div class="box">
       <h2>Enter Student ID</h2>
       <p>Please enter your valid student identifaction number to continue.
       </p>
-      <input type="text" id="studentID" placeholder="eg.. 22-8324-654" maxlength="11">
+      <input type="text" id="studentID" placeholder="eg.. 22-8324-654" maxlength="11" oninput="this.value = this.value.slice(0,11)">
       <button type="submit" id="verifyID" onclick="Verify()">Verify Student</button>
+    </div>
+    
+    
+    <div class="intro">
+      <div>
+        <img src="img/logo.png">
+      </div>
+      <div>
+        <img src="img/logo.png">
+      </div>
     </div>
 
 
