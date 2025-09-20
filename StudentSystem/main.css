@@ -1,4 +1,4 @@
-body {
+/* body {
     min-height: 100vh;
     background: linear-gradient(
         to right,
@@ -32,4 +32,82 @@ body {
 .form label {
 display: block;
 margin-bottom: 5px;
+} */
+
+body{
+    margin:0;
+    padding:0;
+    /* background-color: blue; */
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+
+    background: linear-gradient(rgba(54, 54, 255, 0.4), rgba(52, 52, 255, 0.4)), url('https://c4.wallpaperflare.com/wallpaper/58/63/715/hospital-bed-arsenixc-artwork-wallpaper-preview.jpg'),no-repeat center;
+    background-size: cover;
+
+    user-select: none;
+}
+
+nav{
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 50px 0 20px 0;
+}
+nav div{
+    padding: 10px;
+    width: 200px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.2);
+    font-size: 20px;
+    font-weight: 500;
+    border-radius: 8px;
+    color: #ffffff;
+
+    backdrop-filter: blur(3px);
+    box-shadow: 0 0 15px rgba(0, 0, 0, .2);
+    cursor: pointer;
+    
+}
+
+.active{
+    background-color: rgba(44, 255, 40, 0.5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.459);
+}
+
+nav div:hover{
+    transform: translateY(-3px);
+}
+
+main{
+    background-color: rgba(255, 255, 255, 0.3);
+    height: 80%;
+    width: 80%;
+    margin: auto;
+
+    backdrop-filter: blur(3px);
+    border-radius: 15px;
+    box-shadow: 0 0 10px rgb(75, 75, 75);
+    
+
+    overflow: hidden;
+}
+main section{
+    width: 100%;
+    height: 100%;
+    display: none;
+
+    margin: 0;
+    padding: 0;
+}
+
+.showSec{
+    display: block;
+}
+
+main h3{
+    font-size: 30px;
+    margin: 0;
+    padding: 10px 20px;
+    color:white;
 }
