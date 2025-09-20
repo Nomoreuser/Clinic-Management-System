@@ -14,14 +14,18 @@
             Name <input type="text" name="name">
             <br>
             Quantity <input type="number" name="quantity">
+            <br>
+            Image <input type="file" name="image" accept="image/*">
             <input type="button" value="Add Data" onclick="addName();" class="btn btn-success">
             <hr>
 
             <table id="tb1" class="table">
                 <thead>
                     <tr>
+                        <th>Image</th>
                         <th>Name</th>
                         <th>Quantity</th>
+                        <th>Edit</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
