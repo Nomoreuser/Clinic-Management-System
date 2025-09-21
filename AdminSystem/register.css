@@ -70,6 +70,9 @@ input{
 
 button{
     font-size: 22px;
+    background-color: blue;
+    color: white;
+    border-radius: 20%;
 }
 p{
     text-align: center;
