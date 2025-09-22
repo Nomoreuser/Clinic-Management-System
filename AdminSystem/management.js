@@ -66,3 +66,20 @@ function editName(btn) {
         alert("Update canceled or invalid input.");
     }
 }
+
+function searchTable() {
+    var searchValue = document.sample.search.value.trim().toLowerCase();
+    var rows = document.querySelectorAll("#tb1 tbody tr");
+
+    rows.forEach(function(row) {
+        var nameCell = row.cells[1].textContent.toLowerCase();
+
+        if (nameCell.includes(searchValue) || searchValue === "") {
+            row.style.display = "";
+        } else {
+            row.style.display = "none"; 
+        }
+    });
+
+    return false; 
+}
