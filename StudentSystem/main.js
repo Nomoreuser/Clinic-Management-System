@@ -40,16 +40,24 @@ Medicine();
 
 function Medicine(){
 
-    let listmed = [{name:'Paracetamol',type:'Pain reliever',dosage:'500mg tablets',
-    available:40},{name:'Amoxicillin',type:'Antibiotic',dosage:'250mg capsules',available:23}];
+    let listmed = [{name:'Paracetamol',type:'Pain reliever',dosage:'500mg tablets',available:40,img: "https://www.rosepharmacy.com/ph1/wp-content/uploads/2016/09/67195.jpg"},
+        {name:'Amoxicillin',type:'Antibiotic',dosage:'250mg capsules',available:23,img:""},
+        {name:'Amoxicillin',type:'Antibiotic',dosage:'250mg capsules',available:23,img:""},
+        {name:'Amoxicillin',type:'Antibiotic',dosage:'250mg capsules',available:23,img:""},
+        {name:'Amoxicillin',type:'Antibiotic',dosage:'250mg capsules',available:23,img:""}
+    ];
 
     const medItems = document.getElementById("medItems");
 
     listmed.forEach((items,i) =>{
-        medItems.innerHTML += `<div style="width: 300px;background-color: #ffffff52; border-radius: 15px;border: 1px solid white;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.55);margin:20px 0 0 0;">
+        medItems.innerHTML += `<div style="width: 300px;background-color: rgba(255, 255, 255, 0.32); border-radius: 15px;border: 1px solid white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.55);margin:20px 0 0 0;overflow:hidden">
 
-            <p style="padding:0 10px;margin:0;font-size: 22px">${items.name}</p>
+            <div style="background-color:white;width:100%;height:100px;">
+              <img src="${items.img}" alt="" onerror="this.src='https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg';"
+                style="width:100%; height:100%; object-fit:cover;" />
+            </div>
+            <p style="padding:0 10px;margin:10px 0 0 0;font-size: 22px">${items.name}</p>
 
             <div style="display:flex;justify-content:space-between;padding: 0 15px">
                 <p>Type: </p>
@@ -64,8 +72,10 @@ function Medicine(){
                 <p>${items.available}</p>
             </div>
 
-            <div style="display:flex;justify-content:center;gap:10px;padding: 0 15px;height:30px;background-color: #f0f0f070;margin: 10px 15px;padding:7px">
-                <button style="font-size:25px; width:30px;border-radius:50%;" onmousedown="holdStart(${i},${items.available},'-')" onmouseup="holdStop()" onmouseleave="holdStop()">-</button>
+            <div style="display:flex; justify-content:center; gap:10px; height:30px; background-color: rgba(240, 240, 240, 0.32); margin: 0 15px; padding:5px; border-radius:7px">
+                <button style="font-size:25px; width:30px;border-radius:50%;" 
+                    onmousedown="holdStart(${i},${items.available},'-')" onmouseup="holdStop()" onmouseleave="holdStop()">-
+                </button>
                 <div style="height: 100%;width: 50px;background-color: #ffffffbb;border-radius:5px;position:relative;">
                     <div id="itemQ${i}" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)">0</div>
                 </div>
@@ -90,7 +100,7 @@ function borrowed(i,available,status){
             counts[i]++;
         }else {
             clearInterval(hold);
-            alert('limit');
+            // alert('limit');
         }
 
     }else if(status == '-'){
@@ -98,7 +108,7 @@ function borrowed(i,available,status){
             counts[i]--;
         }else{
             clearInterval(hold);
-            alert('0'+counts[i]);
+            // alert('0'+counts[i]);
         }
     }
 

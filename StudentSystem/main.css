@@ -111,3 +111,16 @@ main h3{
     padding: 10px 20px;
     color:white;
 }
+
+#medItems{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    /* background-color: red; */
+    gap: 10px; /* optional spacing */
+    padding: 10px;
+
+    height: 90%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
