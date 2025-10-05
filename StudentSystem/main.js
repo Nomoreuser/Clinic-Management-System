@@ -44,44 +44,54 @@ function Medicine(){
         {name:'Amoxicillin',type:'Antibiotic',dosage:'250mg capsules',available:23,img:""},
         {name:'Amoxicillin',type:'Antibiotic',dosage:'250mg capsules',available:23,img:""},
         {name:'Amoxicillin',type:'Antibiotic',dosage:'250mg capsules',available:23,img:""},
+        {name:'Amoxicillin',type:'Antibiotic',dosage:'250mg capsules',available:23,img:""},
+        {name:'Amoxicillin',type:'Antibiotic',dosage:'250mg capsules',available:23,img:""},
+        {name:'Amoxicillin',type:'Antibiotic',dosage:'250mg capsules',available:23,img:""},
+        {name:'Amoxicillin',type:'Antibiotic',dosage:'250mg capsules',available:23,img:""},
+        {name:'Amoxicillin',type:'Antibiotic',dosage:'250mg capsules',available:23,img:""},
+        {name:'Amoxicillin',type:'Antibiotic',dosage:'250mg capsules',available:23,img:""},
+        {name:'Amoxicillin',type:'Antibiotic',dosage:'250mg capsules',available:23,img:""},
+        {name:'Amoxicillin',type:'Antibiotic',dosage:'250mg capsules',available:23,img:""},
         {name:'Amoxicillin',type:'Antibiotic',dosage:'250mg capsules',available:23,img:""}
     ];
 
     const medItems = document.getElementById("medItems");
 
     listmed.forEach((items,i) =>{
-        medItems.innerHTML += `<div style="width: 300px;background-color: rgba(255, 255, 255, 0.32); border-radius: 15px;border: 1px solid white;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.55);margin:20px 0 0 0;overflow:hidden">
+        medItems.innerHTML += `<div style="width: 295px;height: 310px;background-color: rgba(255, 255, 255, 0.32); border-radius: 15px;border: 1px solid white;box-shadow: 0 0 10px rgba(0, 0, 0, 0.55);
+            margin:0 0 0;overflow:hidden;">
 
             <div style="background-color:white;width:100%;height:100px;">
-              <img src="${items.img}" alt="" onerror="this.src='https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg';"
-                style="width:100%; height:100%; object-fit:cover;" />
+                <img src="${items.img}" alt="" onerror="this.src='https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg';"
+                    style="width:100%; height:100%; object-fit:cover;" />
             </div>
-            <p style="padding:0 10px;margin:10px 0 0 0;font-size: 22px">${items.name}</p>
+    
+            <div style="padding:5px 15px;font-size: 22px;margin:0">${items.name}</div>
 
-            <div style="display:flex;justify-content:space-between;padding: 0 15px">
-                <p>Type: </p>
-                <p>${items.type}</p>
+            <div style="display:flex;justify-content:space-between;padding: 0 15px 5px 15px;margin:0">
+                <div>Type: </div>
+                <div>${items.type}</div>
             </div>
-            <div style="display:flex;justify-content:space-between;padding: 0 15px">
-                <p style="margin:0;">Dosage: </p>
-                <p style="margin:0;">${items.dosage}</p>
+            <div style="display:flex;justify-content:space-between;padding: 0 15px 10px 15px;margin:0">
+                <div>Dosage: </div>
+                <div>${items.dosage}</div>
             </div>
-            <div style="display:flex;justify-content:space-between;padding: 0 15px">
-                <p>Stocks: </p>
-                <p>${items.available}</p>
+            <div style="display:flex;justify-content:space-between;padding: 0 15px 10px 15px;margin:0">
+                <div>Stocks: </div>
+                <div>${items.available}</div>
             </div>
 
-            <div style="display:flex; justify-content:center; gap:10px; height:30px; background-color: rgba(240, 240, 240, 0.32); margin: 0 15px; padding:5px; border-radius:7px">
-                <button style="font-size:25px; width:30px;border-radius:50%;" 
+            <div style="display:flex; justify-content:center; gap:10px; height:30px; background-color: rgba(240, 240, 240, 0.32); margin: 0 15px 10px; padding:5px; border-radius:7px">
+                <button style="font-size:25px; width:30px;border-radius:50%;margin:0;padding:0;border:none;background:none;cursor:pointer;line-height:1" 
                     onmousedown="holdStart(${i},${items.available},'-')" onmouseup="holdStop()" onmouseleave="holdStop()">-
                 </button>
                 <div style="height: 100%;width: 50px;background-color: #ffffffbb;border-radius:5px;position:relative;">
-                    <div id="itemQ${i}" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)">0</div>
+                    <div id="itemQ${i}" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);margin:0;padding:0">0</div>
                 </div>
-                <button type="submit" style="font-size:25px; width:30px;border-radius:50%;" onmousedown="holdStart(${i},${items.available},'+')" onmouseup="holdStop()" onmouseleave="holdStop()">+</button>
+                <button type="submit" style="font-size:25px; width:30px;border-radius:50%;margin:0;padding:0;border:none;background:none;cursor:pointer;line-height:1" onmousedown="holdStart(${i},${items.available},'+')" onmouseup="holdStop()" onmouseleave="holdStop()">+</button>
             </div>
-  
+    
+            <button style="width: 90%;margin:0 5% 0;padding:8px;border:none;border-radius:5px;background:#2b95ff;color:white;cursor:pointer;display:block">Confirm</button>
         </div>`;
     });
 }

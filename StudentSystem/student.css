@@ -76,6 +76,25 @@ h1{
   border-radius: 5px;
 }
 
+#info{
+  background-color: white;
+  width: 50%;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.infoItem{
+  display: flex;
+  padding-top: 10px;
+}
+
+.infos{
+  width: 110px
+}
+
+.data{
+  color: blue;
+}
 
 
 .intro{

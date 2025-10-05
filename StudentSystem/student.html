@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="student.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
   
@@ -15,7 +16,7 @@
       <p>Please enter your valid student identifaction number to continue.
       </p>
       <input type="text" id="studentID" placeholder="eg.. 22-8324-654" maxlength="11" oninput="this.value = this.value.slice(0,11)">
-      <button type="submit" id="verifyID" onclick="Verify()">Verify Student</button>
+      <button type="submit" id="verifyID" onclick="check()">Verify Student</button>
     </div>
     
     
@@ -27,7 +28,8 @@
         <img src="img/logo.png">
       </div>
     </div>
-
+    <br>
+    <div id="info"></div>
 
     <script src="student.js"></script>
 </body>
