@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <style type="text/tailwindcss">
+      @theme {
+        --color-clifford: #da373d;
+      }
+      .vcbvcb{
+        background-color: rgba(196, 196, 196, 0.969);
+      }
+    </style>
+
+</head>
+<body class="h-screen w-screen select-none">
+    <!-- <h1 class="text-3xl font-bold underline text-clifford">
+      Hello world!
+
+      https://copyicon.com/icons?keyword=dashboard  free svg icon
+    </h1> -->
+    <div class="h-[10%] w-full flex items-center justify-between px-5">
+      <h1 class="text-5xl font-bold">School Clinic Inventory</h1>
+      <div class="h-[50px] w-[50px] rounded-full bg-red-500 flex items-center justify-center" title="Admin123">
+        <p class="text-white font-bold text-[25px] leading-[0]">A</p>
+      </div>
+    </div>
+
+    <main class="h-[90%] flex">
+    
+    <div class="relative bg-[#4A628A] w-[265px] h-[100%] flex flex-col items-center gap-[10px] py-10 rounded-[15px] rounded-bl-[0px] text-white">
+      <a href="#sec1">
+      <div id="dashboard" class="navbtn flex gap-3 text-lg w-60 items-center p-2 pl-4 rounded-[10px] hover:bg-[rgba(255,255,255,0.2)] bg-[rgba(255,255,255,0.3)]">
+        <svg id='Dashboard_Layout_24' width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='24' height='24' stroke='none' fill='currentColor' opacity='0'/>
+          <g transform="matrix(1 0 0 1 12 12)" > <path style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: currentColor; fill-rule: nonzero; opacity: 1;" transform=" translate(-12, -12)" d="M 4 2 C 2.9069372 2 2 2.9069372 2 4 L 2 11 C 2 12.093063 2.9069372 13 4 13 L 9 13 C 10.093063 13 11 12.093063 11 11 L 11 4 C 11 2.9069372 10.093063 2 9 2 L 4 2 z M 15 2 C 13.906937 2 13 2.9069372 13 4 L 13 7 C 13 8.0930628 13.906937 9 15 9 L 20 9 C 21.093063 9 22 8.0930628 22 7 L 22 4 C 22 2.9069372 21.093063 2 20 2 L 15 2 z M 4 4 L 9 4 L 9 11 L 4 11 L 4 4 z M 15 4 L 20 4 L 20 7 L 15 7 L 15 4 z M 15 11 C 13.906937 11 13 11.906937 13 13 L 13 20 C 13 21.093063 13.906937 22 15 22 L 20 22 C 21.093063 22 22 21.093063 22 20 L 22 13 C 22 11.906937 21.093063 11 20 11 L 15 11 z M 15 13 L 20 13 L 20 20 L 15 20 L 15 13 z M 4 15 C 2.9069372 15 2 15.906937 2 17 L 2 20 C 2 21.093063 2.9069372 22 4 22 L 9 22 C 10.093063 22 11 21.093063 11 20 L 11 17 C 11 15.906937 10.093063 15 9 15 L 4 15 z M 4 17 L 9 17 L 9 20 L 4 20 L 4 17 z" stroke-linecap="round" />
+          </g>
+        </svg>
+        <p>Dashboard</p>
+      </div>
+      </a>
+
+      <a href="#sec2">
+      <div id="medicine" class="navbtn flex gap-3 text-lg w-60 items-center p-2 pl-4 rounded-[10px] hover:bg-[rgba(255,255,255,0.2)]">
+        <svg id='Drugs_Pill_24' width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='24' height='24' stroke='currentColor' fill='currentColor' opacity='0'/>
+<g transform="matrix(0.83 0 0 0.83 12 12)" >
+<g style="" >
+<g transform="matrix(1 0 0 1 -5 -5)" >
+<path style="stroke: currentColor; stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-7, -7)" d="M 0.5 7 C 0.5 10.589850873900158 3.4101491260998427 13.5 7 13.5 C 10.589850873900158 13.5 13.5 10.589850873900158 13.5 7 C 13.5 3.4101491260998427 10.589850873900158 0.5 7 0.5 C 3.410149126099842 0.5 0.5 3.4101491260998418 0.5 6.999999999999999 Z" stroke-linecap="round" />
+</g>
+<g transform="matrix(1 0 0 1 4.52 4.52)" >
+<path style="stroke: currentColor; stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-16.52, -16.52)" d="M 17.232 22.182 C 15.474629926038414 23.939370073961584 12.625370073961584 23.939370073961584 10.867999999999999 22.182 C 9.110629926038415 20.424629926038413 9.110629926038413 17.575370073961583 10.867999999999999 15.817999999999998 L 15.817999999999998 10.867999999999999 C 17.575370073961583 9.110629926038413 20.424629926038413 9.110629926038413 22.181999999999995 10.867999999999999 C 23.939370073961584 12.625370073961582 23.939370073961584 15.474629926038412 22.182 17.232 Z" stroke-linecap="round" />
+</g>
+<g transform="matrix(1 0 0 1 4.52 4.52)" >
+<path style="stroke: currentColor; stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-16.52, -16.52)" d="M 13.343 13.343 L 19.707 19.707" stroke-linecap="round" />
+</g>
+<g transform="matrix(1 0 0 1 6.59 -0.08)" >
+<path style="stroke: currentColor; stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-18.59, -11.92)" d="M 17.232 12.282 C 17.947076707380706 11.566760017773934 19.022654669705794 11.352828547836246 19.957 11.74" stroke-linecap="round" />
+</g>
+<g transform="matrix(1 0 0 1 -5 -6.5)" >
+<path style="stroke: currentColor; stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-7, -5.5)" d="M 13.326 5.5 L 0.674 5.5" stroke-linecap="round" />
+</g>
+<g transform="matrix(1 0 0 1 -5 -3.5)" >
+<path style="stroke: currentColor; stroke-width: 1; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-7, -8.5)" d="M 0.674 8.5 L 13.326 8.5" stroke-linecap="round" />
+</g>
+</g>
+</g>
+        </svg>
+        <p>Medicine</p>
+      </div>
+      </a>
+
+      <a href="#sec3">
+      <div id="equipment" class="navbtn flex gap-3 text-lg w-60 items-center p-2 pl-4 rounded-[10px] hover:bg-[rgba(255,255,255,0.2)]">
+        <svg id='Health_Medical_Syringe_24' width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='24' height='24' stroke='currentColor' fill='currentColor' opacity='0'/>
+<g transform="matrix(1.43 0 0 1.43 12 12)" >
+<g style="" >
+<g transform="matrix(1 0 0 1 -0.56 0.61)" >
+<path style="stroke: currentColor; stroke-width: 1.048951048951049; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-6.42, -7.58)" d="M 7 3 L 2.42 7.49 C 2.0444459139398194 7.865136514284536 1.833426687168457 8.374181503801866 1.833426687168457 8.905000000000001 C 1.833426687168457 9.435818496198134 2.0444459139398194 9.944863485715464 2.42 10.32 L 3.6799999999999997 11.58 C 4.055136514284536 11.95555408606018 4.564181503801865 12.166573312831543 5.095 12.166573312831543 C 5.625818496198135 12.166573312831543 6.134863485715464 11.95555408606018 6.51 11.58 L 11 7" stroke-linecap="round" />
+</g>
+<g transform="matrix(1 0 0 1 5.02 -4.98)" >
+<line style="stroke: currentColor; stroke-width: 1.048951048951049; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" x1="-1.5" y1="-1.5" x2="1.5" y2="1.5" />
+</g>
+<g transform="matrix(1 0 0 1 3.52 -3.48)" >
+<line style="stroke: currentColor; stroke-width: 1.048951048951049; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" x1="-1.5" y1="1.5" x2="1.5" y2="-1.5" />
+</g>
+<g transform="matrix(1 0 0 1 -5.2 5.25)" >
+<line style="stroke: currentColor; stroke-width: 1.048951048951049; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" x1="1.275" y1="-1.2750000000000004" x2="-1.275" y2="1.2750000000000004" />
+</g>
+<g transform="matrix(1 0 0 1 2.02 -1.98)" >
+<line style="stroke: currentColor; stroke-width: 1.048951048951049; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" x1="-3.5" y1="-3.5" x2="3.5" y2="3.5" />
+</g>
+</g>
+</g>
+        </svg>
+        <p>Equipment</p>
+      </div>
+      </a>
+
+      <a href="#sec4">
+      <div id="record" class="navbtn flex gap-3 text-lg w-60 items-center p-2 pl-4 rounded-[10px] hover:bg-[rgba(255,255,255,0.2)]">
+        <svg id='Book_Open_24' width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='24' height='24' stroke='currentColor' fill='currentColor' opacity='0'/>
+<g transform="matrix(0.83 0 0 0.83 12 12)" >
+<g style="" >
+<g transform="matrix(1 0 0 1 0.4 0.4)" >
+<path style="stroke: currentColor; stroke-width: 1.8072289156626506; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-12, -12)" d="M 12 5.492 C 12 3.673 16.556 2.179 21.968 2.008 C 22.23871642057219 1.9993326001578375 22.501369585512073 2.100850575327889 22.695885087908756 2.2893345892781642 C 22.89040059030544 2.4778186032284397 23.0001387144861 2.7371449004620123 23 3.008 L 23 17.508 C 23.000243403271742 18.048778028282992 22.57053467978895 18.491776712285873 22.03 18.508 C 16.591 18.668 12 20.166 12 21.992 C 12 20.166 7.409 18.668 1.9700000000000006 18.506 C 1.4294653202110532 18.489776712285877 0.9997565967282579 18.046778028282993 1.0000000000000007 17.506 L 1.0000000000000007 3.008 C 0.9998612855139039 2.7371449004620123 1.1095994096945612 2.4778186032284397 1.3041149120912454 2.2893345892781642 C 1.4986304144879294 2.100850575327889 1.7612835794278128 1.9993326001578373 2.0320000000000014 2.008 C 7.443 2.179 12 3.673 12 5.492 Z" stroke-linecap="round" />
+</g>
+<g transform="matrix(1 0 0 1 0.4 2.08)" >
+<path style="stroke: currentColor; stroke-width: 1.8072289156626506; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-12, -13.68)" d="M 12 5.492 L 12 21.867" stroke-linecap="round" />
+</g>
+</g>
+</g>
+        </svg>
+        <p>Record</p>
+      </div>
+      </a>
+
+      <a href="#sec5">
+      <div id="al" class="navbtn flex gap-3 text-lg w-60 items-center p-2 pl-4 rounded-[10px] hover:bg-[rgba(255,255,255,0.2)]">
+        <svg id='Interface_Text_Formatting_List_Bullets_24' width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='24' height='24' fill="currentColor" stroke="currentColor" opacity='0'/>
+
+
+<g transform="matrix(2 0 0 2 12 12)" >
+<g style="" >
+<g transform="matrix(1 0 0 1 1.38 -3.13)" >
+<path style="stroke: currentColor; stroke-width: 0.75; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-6.5, -2)" d="M 3.5 2 L 9.5 2" stroke-linecap="round" />
+</g>
+<g transform="matrix(1 0 0 1 1.38 -0.13)" >
+<path style="stroke: currentColor; stroke-width: 0.75; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-6.5, -5)" d="M 3.5 5 L 9.5 5" stroke-linecap="round" />
+</g>
+<g transform="matrix(1 0 0 1 1.38 2.88)" >
+<path style="stroke: currentColor; stroke-width: 0.75; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-6.5, -8)" d="M 3.5 8 L 9.5 8" stroke-linecap="round" />
+</g>
+<g transform="matrix(1 0 0 1 -4.25 -3)" >
+<path style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: currentColor; fill-rule: nonzero; opacity: 1;" transform=" translate(-0.75, -2)" d="M 0 2 C 0 2.414213562373095 0.3357864376269049 2.75 0.75 2.75 C 1.1642135623730951 2.75 1.5 2.414213562373095 1.5 2 C 1.5 1.5857864376269049 1.1642135623730951 1.25 0.75 1.25 C 0.33578643762690485 1.25 0 1.5857864376269049 0 2 Z" stroke-linecap="round" />
+</g>
+<g transform="matrix(1 0 0 1 -4.25 0)" >
+<path style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: currentColor; fill-rule: nonzero; opacity: 1;" transform=" translate(-0.75, -5)" d="M 0 5 C 0 5.414213562373095 0.3357864376269049 5.75 0.75 5.75 C 1.1642135623730951 5.75 1.5 5.414213562373095 1.5 5 C 1.5 4.585786437626905 1.1642135623730951 4.25 0.75 4.25 C 0.33578643762690485 4.25 0 4.585786437626905 0 5 Z" stroke-linecap="round" />
+</g>
+<g transform="matrix(1 0 0 1 -4.25 3)" >
+<path style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: currentColor; fill-rule: nonzero; opacity: 1;" transform=" translate(-0.75, -8)" d="M 0 8 C 0 8.414213562373096 0.3357864376269049 8.75 0.75 8.75 C 1.1642135623730951 8.75 1.5 8.414213562373096 1.5 8 C 1.5 7.585786437626905 1.1642135623730951 7.25 0.75 7.25 C 0.33578643762690485 7.25 0 7.585786437626905 0 8 Z" stroke-linecap="round" />
+</g>
+</g>
+</g>
+        </svg>
+        <p>Activity Log</p>
+      </div>
+      </a>
+
+      <div id="logout" class="flex gap-3 text-lg w-60 items-center p-2 pl-4 rounded-[10px] hover:bg-[rgba(255,255,255,0.2)] absolute bottom-0 mb-10">
+        <svg id='Interface_Logout_Square_24' width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='24' height='24' stroke='currentColor' fill='#000000' opacity='0'/>
+
+
+<g transform="matrix(1.43 0 0 1.43 12 12)" >
+<g style="" >
+<g transform="matrix(1 0 0 1 -0.98 0.02)" >
+<path style="stroke: currentColor; stroke-width: 1.048951048951049; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-6, -7)" d="M 11.5 11.5 C 11.5 11.7652 11.3946 12.0196 11.2071 12.2071 C 11.0196 12.3946 10.7652 12.5 10.5 12.5 L 1.5 12.5 C 1.23478 12.5 0.98043 12.3946 0.792893 12.2071 C 0.605357 12.0196 0.5 11.7652 0.5 11.5 L 0.5 2.5 C 0.5 2.23478 0.605357 1.98043 0.792893 1.79289 C 0.98043 1.60536 1.23478 1.5 1.5 1.5 L 10.5 1.5 C 10.7652 1.5 11.0196 1.60536 11.2071 1.79289 C 11.3946 1.98043 11.5 2.23478 11.5 2.5" stroke-linecap="round" />
+</g>
+<g transform="matrix(1 0 0 1 2.77 0.02)" >
+<path style="stroke: currentColor; stroke-width: 1.048951048951049; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-9.75, -7)" d="M 6 7 L 13.5 7" stroke-linecap="round" />
+</g>
+<g transform="matrix(1 0 0 1 5.52 0.02)" >
+<path style="stroke: currentColor; stroke-width: 1.048951048951049; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-12.5, -7)" d="M 11.5 5 L 13.5 7 L 11.5 9" stroke-linecap="round" />
+</g>
+</g>
+</g>
+        </svg>
+        <p>Log out</p>
+      </div>
+    </div>
+
+    <div class="flex-1 overflow-y-hidden scroll-smooth px-7">
+      <section id="sec1" class="h-[100%] ">
+        <div class="flex items-center justify-between">
+          <h1 class="text-4xl font-semibold font-sans ">Dashboard</h1>
+          <!-- <div class="flex items-center gap-5">
+            <div class="border rounded-full text-purple-600 relative">
+              <input type="text" placeholder="Search" class="p-1 pl-4 pr-10 outline-none w-65">
+              <svg onclick="alert('hoohohohooo')" id='Search_24' class="absolute right-3 top-1" width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='24' height='24' stroke='currentColor' fill='#000000' opacity='0'/>
+
+
+<g transform="matrix(2 0 0 2 12 12)" >
+<g style="" >
+<g transform="matrix(1 0 0 1 -0.88 -0.88)" >
+<path style="stroke: currentColor; stroke-width: 0.75; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-4.25, -4.25)" d="M 0.5 4.25 C 0.5 6.3210678118654755 2.1789321881345245 8 4.25 8 C 6.3210678118654755 8 8 6.3210678118654755 8 4.25 C 8 2.1789321881345245 6.3210678118654755 0.5 4.25 0.5 C 2.1789321881345245 0.5 0.5 2.178932188134524 0.5 4.249999999999999 Z" stroke-linecap="round" />
+</g>
+<g transform="matrix(1 0 0 1 3.08 3.08)" >
+<path style="stroke: currentColor; stroke-width: 0.75; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-8.2, -8.2)" d="M 9.5 9.5 L 6.902 6.902" stroke-linecap="round" />
+</g>
+</g>
+</g>
+              </svg>
+            </div>
+            
+            <div class="relative">
+              <button id="filterMed" class="flex items-center gap-7 p-1 px-4 rounded-full text-[rgb(0,82,150)] text-semibold bg-[rgba(91,181,255,0.3)]">
+                sort by 
+                <svg id="filMedArrow" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-3">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                </svg>
+              </button>
+
+              <div id="dropMed" class="hidden absolute w-full left-0 mt-1 bg-white shadow-lg rounded-lg overflow-hidden flex flex-col gap-1">
+                <div class="p-1 pl-2 hover:bg-[rgba(196,196,196,0.3)]">None</div>
+                <div class="p-1 pl-2 hover:bg-[rgba(196,196,196,0.3)]">Name (A-Z)</div>
+                <div class="p-1 pl-2 hover:bg-[rgba(196,196,196,0.3)]">Name (Z-A)</div>
+                <div class="p-1 pl-2 hover:bg-[rgba(196,196,196,0.3)]">Oldest</div>
+                <div class="p-1 pl-2 hover:bg-[rgba(196,196,196,0.3)]">Recently</div>
+                <div class="p-1 pl-2 hover:bg-[rgba(196,196,196,0.3)]">Quantity (H-L)</div>
+                <div class="p-1 pl-2 hover:bg-[rgba(196,196,196,0.3)]">Quantity (L-H)</div>
+              </div>
+            </div>
+
+            <div class="flex gap-4 bg-[#4A628A] text-white text-bold p-1 px-4 rounded-lg" onclick="alert(Date())">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>
+
+              Add Medicine
+            </div>
+          </div> -->
+        </div>
+      </section>
+
+      <section id="sec2" class="h-[100%]">
+        <div class="flex items-center justify-between">
+          <h1 class="text-4xl font-semibold font-sans ">Medicine</h1>
+          <div class="flex items-center gap-5">
+            <div class="border rounded-full text-purple-600 relative">
+              <input type="text" placeholder="Search" class="p-1 pl-4 pr-10 outline-none w-65">
+              <svg onclick="alert('hoohohohooo')" id='Search_24' class="absolute right-3 top-1" width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='24' height='24' stroke='currentColor' fill='#000000' opacity='0'/>
+
+
+<g transform="matrix(2 0 0 2 12 12)" >
+<g style="" >
+<g transform="matrix(1 0 0 1 -0.88 -0.88)" >
+<path style="stroke: currentColor; stroke-width: 0.75; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-4.25, -4.25)" d="M 0.5 4.25 C 0.5 6.3210678118654755 2.1789321881345245 8 4.25 8 C 6.3210678118654755 8 8 6.3210678118654755 8 4.25 C 8 2.1789321881345245 6.3210678118654755 0.5 4.25 0.5 C 2.1789321881345245 0.5 0.5 2.178932188134524 0.5 4.249999999999999 Z" stroke-linecap="round" />
+</g>
+<g transform="matrix(1 0 0 1 3.08 3.08)" >
+<path style="stroke: currentColor; stroke-width: 0.75; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-8.2, -8.2)" d="M 9.5 9.5 L 6.902 6.902" stroke-linecap="round" />
+</g>
+</g>
+</g>
+              </svg>
+            </div>
+            
+            <div class="relative">
+              <button id="filterMed" class="flex items-center gap-7 p-1 px-4 rounded-full text-[rgb(0,82,150)] text-semibold bg-[rgba(91,181,255,0.3)]">
+                sort by 
+                <svg id="filMedArrow" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-3">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                </svg>
+              </button>
+
+              <div id="dropMed" class="hidden absolute w-full left-0 mt-1 bg-white shadow-lg rounded-lg overflow-hidden flex flex-col gap-1">
+                <div class="p-1 pl-2 hover:bg-[rgba(196,196,196,0.3)]">None</div>
+                <div class="p-1 pl-2 hover:bg-[rgba(196,196,196,0.3)]">Name (A-Z)</div>
+                <div class="p-1 pl-2 hover:bg-[rgba(196,196,196,0.3)]">Name (Z-A)</div>
+                <div class="p-1 pl-2 hover:bg-[rgba(196,196,196,0.3)]">Oldest</div>
+                <div class="p-1 pl-2 hover:bg-[rgba(196,196,196,0.3)]">Recently</div>
+                <div class="p-1 pl-2 hover:bg-[rgba(196,196,196,0.3)]">Quantity (H-L)</div>
+                <div class="p-1 pl-2 hover:bg-[rgba(196,196,196,0.3)]">Quantity (L-H)</div>
+              </div>
+            </div>
+
+            <div class="flex gap-4 bg-[#4A628A] text-white text-bold p-1 px-4 rounded-lg" onclick="alert(Date())">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>
+
+              Add Medicine
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="sec3" class="h-[100%]">
+        <h1 class="text-4xl font-semibold ">Equipment</h1>
+      </section>
+
+      <section id="sec4" class="h-[100%]">
+        <h1 class="text-4xl font-semibold font-sans ">Record</h1>
+      </section>
+
+      <section id="sec5" class="h-[100%]">
+        <h1 class="text-4xl font-semibold font-sans ">Activity Log</h1>
+      </section>
+    </div>
+
+    </main>
+
+  <script src="mg.js"></script>
+</body>
+</html>
