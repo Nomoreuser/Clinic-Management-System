@@ -5,6 +5,12 @@ document.addEventListener('click',(e)=>{
     if(!document.getElementById('filterMed').contains(e.target) && !document.getElementById('dropMed').contains(e.target)){
         document.getElementById('dropMed').classList.add('hidden');
     }
+    if(!document.getElementById('filterEquip').contains(e.target) && !document.getElementById('dropEquip').contains(e.target)){
+        document.getElementById('dropEquip').classList.add('hidden');
+    }
+    if(!document.getElementById('addMedicine').contains(e.target) && !document.getElementById('addMedForm').contains(e.target)){
+        document.getElementById('addMedForm').classList.add('hidden');
+    }
 })
 
 document.getElementById('logout').addEventListener('click', (e)=>{
@@ -25,3 +31,83 @@ document.getElementById('filterMed').addEventListener('click',()=>{
 
     document.getElementById('filMedArrow').classList.toggle('rotate-180',!show);
 })
+
+document.getElementById('filterEquip').addEventListener('click',()=>{
+    const show = document.getElementById('dropEquip').classList.toggle('hidden');
+
+    document.getElementById('filEquipArrow').classList.toggle('rotate-180',!show);
+})
+
+document.getElementById('addMedicine').addEventListener('click',()=>{
+    const show = document.getElementById('addMedForm').classList.toggle('hidden');
+    removeImg();
+})
+
+document.getElementById('dropImage').addEventListener('dragover',(e)=>{
+    e.preventDefault();
+    
+    document.getElementById('dropImage').classList.remove('bg-[#f9fbffff]')
+    document.getElementById('dropImage').classList.add('bg-[#f0f5ffff]')
+    document.getElementById('dropImage').style.borderColor = " rgba(153, 177, 255, 1)";
+})
+
+document.getElementById('dropImage').addEventListener('dragleave',(e)=>{
+    e.preventDefault();
+    
+    document.getElementById('dropImage').classList.remove('bg-[#f0f5ffff]')
+    document.getElementById('dropImage').classList.add('bg-[#f9fbffff]')
+    document.getElementById('dropImage').style.borderColor = " #c7c7c7ff"
+})
+
+document.getElementById('dropImage').addEventListener('click',()=>{
+    image.click();
+})
+
+document.getElementById('image').addEventListener('change',(e)=>{
+    e.preventDefault();
+
+    // const img = e.target.files[0];
+    // alert(`${img.name}`)
+    // alert('hi')
+    renderImg(e.target.files[0])
+});
+
+
+document.getElementById('dropImage').addEventListener('drop',(e)=>{
+    e.preventDefault();
+
+    const img = e.dataTransfer.files[0];
+
+    if (img && img.type.startsWith('image/')) {
+      alert(`You dropped: ${img.name}`);
+      renderImg(img);
+    } else {
+      alert('Please drop an image file.');
+    }
+});
+
+function renderImg(img){
+    // alert("hello")
+    if(!img){
+        alert('No images')
+        return;
+    }
+    const read = new FileReader();
+
+    read.addEventListener('load',()=>{
+        document.getElementById('pImg').src = read.result;
+        document.getElementById('dropImage').classList.add('hidden');
+        document.getElementById('previewImage').classList.remove('hidden');
+    })
+    read.readAsDataURL(img);
+}
+
+function removeImg(){
+    document.getElementById('image').value = '';
+    document.getElementById('dropImage').classList.remove('hidden');
+    document.getElementById('previewImage').classList.add('hidden');
+
+    document.getElementById('dropImage').classList.remove('bg-[#f0f5ffff]')
+    document.getElementById('dropImage').classList.add('bg-[#f9fbffff]')
+    document.getElementById('dropImage').style.borderColor = " #e7e5e4"
+}
