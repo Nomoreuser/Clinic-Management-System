@@ -3,29 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="register.css">
     <title>Document</title>
+    <link rel="stylesheet" href="register.css">
 </head>
 <body>
 
-    <div>
+    <div class="icon">
         <img id="logo" src="img/logo.png" alt="">
     </div>
-    <div>
-        <form action="">
-            <h1>Register</h1>
-            <label>Username</label>
-            <input type="text">
-            <label>Password</label>
-            <input type="password">
-            <label>Confirm Password</label>
-            <input type="text">
 
-            <button>Create</button>
+    <div class="formcon">
 
-            <p>Want to <a href="login.html">login?</a></p>
+        <h1>Register</h1>
+        <div class="ppp">
+            <div class="pn">1</div>
+            <div class="pl">
+                <div id="fill" style="height: 100%; width: 0; background-color: rgb(102, 75, 255); transition: 0.5s;"></div>
+            </div>
+            <div class="pn" id="otp">2</div>
+        </div>
+
+        <form id="form1">
+            <div class="form">
+                <input id="username" type="text" placeholder="Username" required>
+
+                <input id="email" type="email" placeholder="Email" required>
+
+                <input id="pass" type="password" placeholder="Password" required>
+
+                <input id="conpass" type="text" placeholder="Confirm password" required>
+
+                <button id="submit" type="submit">Continue</button>
+
+                <p class="goLogin">Already have an account? <a href="/login">login</a></p>
+            </div>
+        </form>
+
+        <form id="form2" hidden>
+            <div class="form" style="height: 300px;">
+                <p style="margin: 0;font-size: 18px; text-align: center;">We've sent a verification code to your email 
+                    <a href="https://mail.google.com/mail/u/0/?fs=1&to=#inbox" target="_blank">
+                        <span id="showEmail"></span>
+                    </a>
+                    . Please enter it below.
+                </p>
+                <div style="display: flex; justify-content: center; gap: 8px;">
+                    <input type="text" class="verification" maxlength="1" data-index="0">
+                    <input type="text" class="verification" maxlength="1" data-index="1">
+                    <input type="text" class="verification" maxlength="1" data-index="2">
+                    <input type="text" class="verification" maxlength="1" data-index="3">
+                    <input type="text" class="verification" maxlength="1" data-index="4">
+                    <input type="text" class="verification" maxlength="1" data-index="5">
+                </div>
+                <div id="resend" style="width: fit-content;margin: 0px auto;pointer-events: none;padding:2px;display: flex;height: 20px;">
+                    <span id="resendText" style="color: rgb(78, 78, 255); text-decoration: underline;">Resend Code</span>
+                    <span id="timer" style="text-decoration: none; padding:0 0 0 10px; font-weight: bold;"></span>
+                </div>
+
+                <div id="confirm" style="background-color: blue;border-radius: 15px;padding: 15px;color: white;text-align: center;">Verify & Create Account</div>
+                
+                <div id="back" style="user-select: none;width: fit-content;">Back</div>
+            </div>
         </form>
     </div>
+
+    <div id="msg" hidden></div>
+    <script src="register.js"></script>
 
 </body>
 </html>
