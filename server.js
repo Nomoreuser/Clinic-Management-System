@@ -7,6 +7,7 @@ import nodemailer from "nodemailer";
 import path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
+import session from "express-session";
 
 import pool from "./db.js";
 
@@ -19,6 +20,11 @@ const app = express();
 const PORT = 5000;
 
 app.use(express.json());
+app.use(session({
+  secret: "secret",
+  resave: false,
+  saveUninitialized: false
+}));
 
 
 //Email Verification
@@ -105,6 +111,57 @@ app.post("/users/account-check", async (req, res) => {
         res.status(500).json({ error: "Server error" });
     }
 });
+
+app.post("/user/login", async(req, res) => {
+
+    try{
+        const {email, pass} = req.body;
+
+        const result = await pool.query(
+            "SELECT * FROM Accounts WHERE email = $1 AND password = $2",
+            [email, pass]
+        )
+        // return res.json({ exists: result.rows.length > 0})
+        if(result.rows.length === 1){
+            req.session.user = {email}
+            res.json({ok: true});
+
+        }else{
+            res.json({ ok: false, message: "Invalid Credentials"});
+        }
+    }catch(error){
+        console.error("CHECK EMAIL ERROR:", error.message);
+        res.status(500).json({ error: "Server error" });
+    }
+})
+
+app.get('/me', async(req, res) => {
+
+    if(!req.session.user) return res.json({loggedIn: false});
+
+    try {
+        const result = await pool.query(
+            "SELECT * FROM Accounts WHERE email = $1",
+            [req.session.user.email]
+        )
+        return res.json({ loggedIn: result.rows.length === 1});
+    } catch (err) {
+        return res.json({ loggedIn: false });
+    }
+});
+
+app.post('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Logout error:", err);
+      return res.status(500).json({ ok: false, message: "Failed to logout" });
+    }
+
+    res.clearCookie('connect.sid', { path: '/' }); // default cookie name used by express-session
+    res.json({ ok: true });
+  });
+});
+
 
 
 

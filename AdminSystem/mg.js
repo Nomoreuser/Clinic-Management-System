@@ -20,9 +20,32 @@ document.addEventListener('click',(e)=>{
 
 })
 
-document.getElementById('logout').addEventListener('click', (e)=>{
-    alert("hi");
-})
+document.getElementById('logout').addEventListener('click', async(e)=>{
+    
+    // const res =  await fetch('http://localhost:5000/logout',{
+    //     method: "POST"
+    // });
+    // const dd = await res.json()
+    // if(dd.ok){
+    //     alert('logout');
+    //     window.location.href = "/login";
+    // }
+    // if(!dd.ok) alert("Failed to logout!")
+    document.getElementById('logoutConfirm').classList.remove('hidden');
+});
+
+async function checkSession() {
+  const resp = await fetch('http://localhost:5000/me', { credentials: "include" });
+  const data = await resp.json();
+  
+  if (!data.loggedIn && window.location.pathname === "/inventory") {
+    window.location.href = "/login";
+    // alert("You need to login "+ window.location.pathname)
+  }
+}
+
+checkSession()
+
 
 document.querySelectorAll('.navbtn').forEach(i=>{
     i.addEventListener('click',()=>{

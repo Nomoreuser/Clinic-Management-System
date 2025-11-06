@@ -156,6 +156,9 @@ document.getElementById('resend').addEventListener('click', async(e)=>{
 document.getElementById('confirm').addEventListener('click',async(e)=>{
     e.preventDefault();
 
+    isLoading = true;
+    document.getElementById("confirm").innerHTML = `<div class="loading"></div>`;
+
     const temp = JSON.parse(localStorage.getItem('temp'));
     const code = Array.from(document.querySelectorAll('.verification')).map(i=>i.value.trim());
     // alert(temp.email+temp.code+ "   =  "+email.value.trim()+code.join(""))
@@ -190,31 +193,33 @@ document.getElementById('confirm').addEventListener('click',async(e)=>{
             }))
 
             // alert('success '+data.message);
+            document.getElementById('msg').hidden = false;
+            document.getElementById('msg').innerHTML += `
+                <div class="msgBox">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24">
+                        <path fill="#10b981" fill-rule="evenodd" d="M12 21a9 9 0 1 0 0-18a9 9 0 0 0 0 18m-.232-5.36l5-6l-1.536-1.28l-4.3 5.159l-2.225-2.226l-1.414 1.414l3 3l.774.774z" clip-rule="evenodd"/>
+                    </svg>
+                    <h1>Account Created</h1>
+                    <p>Your account has been successfully created and is ready to use.</p>
+                    <div class="msgbtn">
+                        <div onclick="window.location.href = '/login';reset()">Continue to Login</div>
+                        <div onclick="reset()">Back</div>
+                    </div>
+                </div>
+            `;
 
         }catch(error){
             alert(error)
-            return;
         }
-
-        document.getElementById('msg').hidden = false;
-        document.getElementById('msg').innerHTML += `
-            <div class="msgBox">
-                <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24">
-                    <path fill="#10b981" fill-rule="evenodd" d="M12 21a9 9 0 1 0 0-18a9 9 0 0 0 0 18m-.232-5.36l5-6l-1.536-1.28l-4.3 5.159l-2.225-2.226l-1.414 1.414l3 3l.774.774z" clip-rule="evenodd"/>
-                </svg>
-                <h1>Account Created</h1>
-                <p>Your account has been successfully created and is ready to use.</p>
-                <div class="msgbtn">
-                    <div onclick="window.location.href = '/login'">Continue to Login</div>
-                    <div onclick="reset()">Back</div>
-                </div>
-            </div>
-        `;
+        
     }else{
         document.querySelectorAll('.verification').forEach(i=>{
             i.classList.add("wrongCode");
         })
     }
+
+    isLoading = false;
+    document.getElementById("confirm").textContent = `Verify & Create Account`;
 })
 
 document.querySelectorAll('.verification').forEach(input => {
