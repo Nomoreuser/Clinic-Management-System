@@ -10,6 +10,8 @@ body{
     overflow: hidden;
     gap: 20px;
     user-select: none;
+
+    font-family: "Inter", sans-serif;
 }
 
 .icon{
@@ -268,3 +270,33 @@ input{
         opacity: 1;
     }
 }
+
+@keyframes modernSlideUp2 {
+    0% {
+        transform: scale(0.7) translateY(80px);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+
+#inputAlert{
+    padding: 10px 15px;
+    margin: -20px 0 20px 0;
+    background-color: #ffd8d86e;
+    border-radius: 10px;
+    border: 1px solid rgb(255, 179, 179);
+    font-size: 15px;
+    color: rgb(255, 22, 22);
+    font-weight: 400;
+    animation: modernSlideUp2 .5s ease;
+}
+
+.styleAlert{
+    border: 2px solid #ff9a9a !important;
+    background-color: rgba(255, 208, 208, 0.674);
+}
+

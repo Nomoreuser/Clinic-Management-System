@@ -30,7 +30,20 @@ document.getElementById('form1').addEventListener('submit', async(e)=>{
 
     // stop if exists
     if (data.exists) {
-        alert("Email already exists! "+data.exists);
+        // alert("Email already exists! "+data.exists);
+        
+        // email.style.cssText = `
+        //     font-size: 16px;
+        //     outline: none;
+        //     border: 1px solid red;
+   
+        //     border-radius: 20px;
+        //     padding: 10px 20px;
+        //     background-color: rgba(255, 161, 161, 1);
+        // `;
+        email.classList.add('styleAlert')
+        document.getElementById('inputAlert').hidden = false;
+        document.getElementById('inputAlert').textContent = "⚠️ Email already registered.";
         isLoading = false;
         document.getElementById("submit").innerHTML = "Continue";
         return;
@@ -40,6 +53,15 @@ document.getElementById('form1').addEventListener('submit', async(e)=>{
         isLoading = false;
         document.getElementById("submit").innerHTML = "Continue";
         console.log(data.error);
+        return;
+    }
+
+    if(pass.value.trim() != conpass.value.trim()){
+        conpass.classList.add('styleAlert');
+        document.getElementById('inputAlert').hidden = false;
+        document.getElementById('inputAlert').textContent = "⚠️ Passwords don't match.";
+        isLoading = false;
+        document.getElementById("submit").innerHTML = "Continue";
         return;
     }
 
@@ -142,16 +164,17 @@ document.getElementById('confirm').addEventListener('click',async(e)=>{
         // window.location.href = "/inventory";
         // alert("hhh");
         try{
+            //send to server and insert to database
             const res = await fetch(API_URL, {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({username: username.value, email: email.value, password: pass.value})
+                body: JSON.stringify({username: username.value.trim(), email: email.value.trim(), password: pass.value.trim()})
             });
 
             const data = res.json();
             if(!res.ok) return alert('data error ' +data.error+' '+data);
 
-            //clear value 
+            //clear value if ok
             email.value = "";
             username.value ="";
             pass.value = "";
@@ -284,6 +307,16 @@ function reset(){
     
 }
 
-document.addEventListener('click', ()=>{
-    document.getElementById('textAlert').hidden = true;
+
+
+email.addEventListener("focus", ()=>{
+    email.classList.remove('styleAlert');
+    document.getElementById('inputAlert').textContent = "";
+    document.getElementById('inputAlert').hidden= true;
+})
+
+conpass.addEventListener("focus", ()=>{
+    conpass.classList.remove('styleAlert');
+    document.getElementById('inputAlert').textContent = "";
+    document.getElementById('inputAlert').hidden= true;
 })

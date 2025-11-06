@@ -22,16 +22,16 @@
             </div>
             <div class="pn" id="otp">2</div>
         </div>
-
+        <div id="inputAlert" hidden></div>
         <form id="form1">
             <div class="form">
-                <input id="username" type="text" placeholder="Username" required>
+                <input id="username" type="text" placeholder="Username" required autocomplete="off">
 
-                <input id="email" type="email" placeholder="Email" required>
+                <input id="email" type="email" placeholder="Email" required autocomplete="off">
 
-                <input id="pass" type="password" placeholder="Password" required>
+                <input id="pass" type="password" placeholder="Password" minlength="6" required>
 
-                <input id="conpass" type="text" placeholder="Confirm password" required>
+                <input id="conpass" type="password" placeholder="Confirm password" minlength="6" required>
 
                 <button id="submit" type="submit">Continue</button>
 
