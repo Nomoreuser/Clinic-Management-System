@@ -35,6 +35,7 @@ const transporter = nodemailer.createTransport({
         pass: "odyy zafr cpqc lylx" //App pasword
     }
 });
+//this is the design looks of message 
 async function sendVerification(toEmail, code) {
     const mail = {
         from: '"Clinic Inventory" <geraldalbonc@gmail.com>',
@@ -59,6 +60,7 @@ async function sendVerification(toEmail, code) {
         console.error("❌ Error:", error)
     }
 }
+//sent to user email the veri. code 
 app.post("/sent-verification",async (req,res)=>{
 
     const {email, code} = req.body;
@@ -112,6 +114,7 @@ app.post("/users/account-check", async (req, res) => {
     }
 });
 
+//login 
 app.post("/user/login", async(req, res) => {
 
     try{
@@ -135,6 +138,7 @@ app.post("/user/login", async(req, res) => {
     }
 })
 
+//user will automatic go to /inventory when go to login if there already do login
 app.get('/me', async(req, res) => {
 
     if(!req.session.user) return res.json({loggedIn: false});
@@ -149,7 +153,7 @@ app.get('/me', async(req, res) => {
         return res.json({ loggedIn: false });
     }
 });
-
+//logout remove session saved
 app.post('/logout', (req, res) => {
   req.session.destroy((err) => {
     if (err) {
@@ -162,6 +166,20 @@ app.post('/logout', (req, res) => {
   });
 });
 
+app.get('/user/account-info', async(req, res)=>{
+    if(!req.session.user) return res.json({ ok: false, message: "User not login"});
+
+    try{
+        const result = await pool.query(
+            "SELECT * FROM Accounts WHERE email = $1",
+            [req.session.user.email]
+        );
+        res.json({ ok: true, user: result.rows[0]});
+    }catch(error){
+        console.error(error.message);
+        res.json({ok:false, message: error.message});
+    }
+})
 
 
 

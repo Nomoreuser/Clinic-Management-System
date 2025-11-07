@@ -21,18 +21,19 @@ document.addEventListener('click',(e)=>{
 })
 
 document.getElementById('logout').addEventListener('click', async(e)=>{
-    
-    // const res =  await fetch('http://localhost:5000/logout',{
-    //     method: "POST"
-    // });
-    // const dd = await res.json()
-    // if(dd.ok){
-    //     alert('logout');
-    //     window.location.href = "/login";
-    // }
-    // if(!dd.ok) alert("Failed to logout!")
-    document.getElementById('logoutConfirm').classList.remove('hidden');
+    document.getElementById('logoutBox').classList.remove('hidden');
 });
+document.getElementById('conLog').addEventListener('click', async()=>{
+    const res =  await fetch('http://localhost:5000/logout',{
+        method: "POST"
+    });
+    const dd = await res.json()
+    if(dd.ok){
+        // alert('logout');
+        window.location.href = "/login";
+    }
+    if(!dd.ok) alert("Failed to logout!")
+})
 
 async function checkSession() {
   const resp = await fetch('http://localhost:5000/me', { credentials: "include" });
@@ -43,8 +44,30 @@ async function checkSession() {
     // alert("You need to login "+ window.location.pathname)
   }
 }
-
 checkSession()
+
+async function user() {
+    const res = await fetch('http://localhost:5000/user/account-info', {credentials: "include"});
+    const data = await res.json()
+
+    if(data.ok){
+        // alert("if: "+data.user.email+data.user.username);
+        document.querySelectorAll('.picon').forEach((icon) => {
+            icon.textContent = data.user.username.charAt(0);
+        })
+        
+        document.querySelectorAll('.pname').forEach((uname) =>{
+            uname.textContent = data.user.username;
+        })
+        document.querySelectorAll('.pemail').forEach((uemail) => {
+            uemail.textContent = data.user.email;
+        })
+
+    }else{
+        alert("else: "+data.message);
+    }
+}
+user()
 
 
 document.querySelectorAll('.navbtn').forEach(i=>{
