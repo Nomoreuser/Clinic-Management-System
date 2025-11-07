@@ -4,6 +4,7 @@ document.addEventListener('click',(e)=>{
 
     if(!document.getElementById('filterMed').contains(e.target) && !document.getElementById('dropMed').contains(e.target)){
         document.getElementById('dropMed').classList.add('hidden');
+        document.getElementById('filMedArrow').classList.remove('rotate-180');
     }
 
     if(!document.getElementById('filterEquip').contains(e.target) && !document.getElementById('sortEquip').contains(e.target)){
