@@ -1,0 +1,31 @@
+
+
+== DATABASE
+
+CREATE DATABASE Clinic_Inventory;
+
+CREATE TABLE Accounts (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT NOW()
+);
+
+CREATE TABLE Activity (
+    id SERIAL PRIMARY KEY,
+    type VARCHAR(99) NOT NULL,
+    activity VARCHAR(255) NOT NULL,
+    userid INT NOT NULL REFERENCES Accounts(id),
+    dateTime TIMESTAMP DEFAULT NOW()
+);
+
+
+SELECT 
+    a.type,
+    a.activity,
+    u.username,
+    u.email,
+    a.dateTime
+FROM Activity a
+JOIN Accounts u ON a.userid = u.id
+ORDER BY a.dateTime DESC;

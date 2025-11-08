@@ -25,6 +25,18 @@ document.getElementById('logout').addEventListener('click', async(e)=>{
     document.getElementById('logoutBox').classList.remove('hidden');
 });
 document.getElementById('conLog').addEventListener('click', async()=>{
+    //save first activity log
+    const ss = await fetch('http://localhost:5000/activity-log', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "logout", activity: "User logged out" }),
+        credentials: "include"
+    });
+
+    const result = await ss.json();
+    if (!ss.ok) return alert("Error logging activity: " + result.error);
+
+    //success then logout
     const res =  await fetch('http://localhost:5000/logout',{
         method: "POST"
     });
@@ -79,6 +91,35 @@ document.querySelectorAll('.navbtn').forEach(i=>{
         
     })
 })
+
+
+function updateActiveLink() {
+  // remove active from all links
+  document.querySelectorAll('.navbtn').forEach(link => link.classList.remove("bg-[rgba(255,255,255,0.3)]"));
+
+  // get current hash (e.g. #sec2)
+  const currentHash = window.location.hash;
+
+  // find link that matches current hash
+  const activeA = document.querySelector(`a[href="${currentHash}"]`);
+  if (activeA) {
+    const navDiv = activeA.querySelector('.navbtn');
+    if (navDiv) {
+      navDiv.classList.add("bg-[rgba(255,255,255,0.3)]");
+    }
+  }
+}
+updateActiveLink();
+window.addEventListener('hashchange', updateActiveLink);
+
+window.addEventListener('load', () => {
+  updateActiveLink();
+  
+  setTimeout(() => {
+    const sec = document.querySelector(window.location.hash);
+    if (sec) sec.scrollIntoView({ behavior: 'auto' }); // smooth scroll
+  }, 100); // small delay so elements exist
+});
 
 document.getElementById('filterMed').addEventListener('click',()=>{
     const show = document.getElementById('dropMed').classList.toggle('hidden');
@@ -367,11 +408,11 @@ function renderListMed(i){
                 </colgroup>
                 <thead>
                     <tr class="text-left">
-                        <th class="pb-2 border-b">Name</th> 
-                        <th class="pb-2 border-b">Description</th> 
-                        <th class="pb-2 border-b">Dosage</th> 
-                        <th class="py-2 border-b">Quantity</th> 
-                        <th class="pb-2 border-b">Action</th>
+                        <th class="pb-2 border-b-2 border-stone-300 ">Name</th> 
+                        <th class="pb-2 border-b-2 border-stone-300 ">Description</th> 
+                        <th class="pb-2 border-b-2 border-stone-300 ">Dosage</th> 
+                        <th class="pb-2 border-b-2 border-stone-300 ">Quantity</th> 
+                        <th class="pb-2 border-b-2 border-stone-300 ">Action</th>
                     </tr>
                 </thead>
                 <tbody id="mdl">
@@ -382,14 +423,9 @@ function renderListMed(i){
             </table>
         `;
         listmed.forEach((med,i) =>{
-            // document.getElementById('medList').innerHTML += `
-            //     <div class="w-full bg-red-100 border-b p-3">
-            //         ${med.name}
-            //     </div>
-            // `;
 
             document.getElementById('mdl').innerHTML += `
-                <tr class="border-b h-[50px] hover:bg-blue-100">
+                <tr class="border-b border-stone-300 h-[50px] hover:bg-blue-100">
                     <td class="relative px-5">
                         <div class="flex items-center gap-3">
                             <div class="group">
@@ -451,6 +487,7 @@ function renderListMed(i){
     }
 }
 
+
 document.getElementById('itemLine').addEventListener('click',()=>{
     localStorage.setItem('layout','line');
 
@@ -498,6 +535,90 @@ function Layout(i){
         renderListMed(i);
     }
 }
+
+///////////////////////////////////////
+
+function type(i){
+    if(i == "login"){
+        return `
+        <div class="h-[45px] w-[45px] rounded-full bg-green-500 m-auto flex items-center justify-center">
+            <svg class="size-6" xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 24 24">
+                <path fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4m-5-4l5-5l-5-5m5 5H3"/>
+            </svg>
+        </div>
+        `;
+    }else if(i == "logout"){
+        return `
+        <div class="h-[45px] w-[45px] rounded-full bg-red-500 m-auto flex items-center justify-center">
+            <svg class="size-6" xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 20 20">
+                <path fill="white" d="M3 3h8V1H3a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h8v-2H3z"/>
+                <path fill="white" d="M13 5v4H5v2h8v4l6-5z"/>
+            </svg>
+        </div>
+        `;
+    }
+
+}
+
+async function activity() {
+    document.getElementById('actList').innerHTML = "";
+
+    const res = await fetch('http://localhost:5000/activity-log', {credentials: "include"});
+    const result = await res.json()
+
+    console.log(result);
+
+    if (!Array.isArray(result.activities)) {
+        console.error("Activities not found:", result);
+        return;
+    }
+
+    document.getElementById('actList').innerHTML +=  ` 
+        <table class="w-full">
+            <colgroup>
+                <col class="w-[10%]" />
+                <col class="w-[40%]" />
+                <col class="w-[30%]" />
+                <col class="w-[20%]" />
+            </colgroup>
+            <thead>
+                <tr class="text-left">
+                    <th class="pb-2 border-b-2 border-stone-300 text-center ">Type</th> 
+                    <th class="pb-2 border-b-2 border-stone-300 ">Activity</th> 
+                    <th class="pb-2 border-b-2 border-stone-300 ">User</th> 
+                    <th class="pb-2 border-b-2 border-stone-300 ">Date and Time</th> 
+                </tr>
+            </thead>
+            <tbody id="actil">
+                
+            </tbody>
+        </table>
+    `;
+
+    result.activities.forEach((list)=>{
+        document.getElementById('actil').innerHTML += `
+            <tr class="border-b border-stone-300 h-[70px] hover:bg-blue-100">
+                <td>${type(list.type)}</td>
+                <td class="text-stone-700 text-[17px] font-[500]">${list.activity}</td>
+                <td>
+                    <div class="flex flex-col leading-none">
+                        <p class="text-stone-800 text-[18px] font-[500]">${list.username}</p>
+                        <p class="text-stone-600 text-[16px] font-[500]">${list.email}</p>
+                    </div>
+                </td>
+                <td>
+                    <p class="text-stone-700 text-[16px] font-[500]">
+                        ${new Date(list.datetime).toLocaleString('en-GB', {day: '2-digit', month: 'long', year: 'numeric', timeZone: 'Asia/Manila'})}, 
+                        ${new Date(list.datetime).toLocaleString('en-US', {hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'Asia/Manila'})}
+                    </p>
+                </td>
+
+            </tr>
+        `;
+    });
+}
+
+activity()
 
 
 

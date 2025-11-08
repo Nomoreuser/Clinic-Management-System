@@ -38,11 +38,9 @@
       }
 
       .group:not(:hover) .boxt {
-            animation: none;
-            opacity: 0;
-        }
-
-
+        animation: none;
+        opacity: 0;
+      }
     </style>
 
 </head>
@@ -66,7 +64,7 @@
             <div class="hidden group-hover:block absolute z-[5] top-[50px] right-0 bg-[rgba(0,0,0,0.75)] p-2 rounded-lg flex flex-col leading-none">
             <small class="whitespace-nowrap font-[700] text-stone-100">Admin Account</small>
             <p class="pname text-[rgb(200,200,200)] font-[600] text-[16px] mt-1"></p>
-            <p class="pemail text-[rgb(200,200,200)] font-[600] text-[16px]"></p>
+            <p class="whitespace-nowrap pemail text-[rgb(200,200,200)] font-[600] text-[16px]"></p>
           </div>
         </div>
       </div>
@@ -74,6 +72,7 @@
 
     <main class="h-[90%] flex">
     
+    <!-- side buttons -->
     <div class="relative bg-[#4A628A] w-[265px] h-[100%] flex flex-col items-center gap-[10px] py-10 rounded-[15px] rounded-bl-[0px] text-white">
       <a href="#sec1">
       <div id="dashboard" class="navbtn flex gap-3 text-lg w-60 items-center p-2 pl-4 rounded-[10px] hover:bg-[rgba(255,255,255,0.2)] bg-[rgba(255,255,255,0.3)]">
@@ -214,7 +213,8 @@
       </div>
     </div>
 
-    <div class="flex-1 overflow-y-hidden scroll-smooth bg-white">
+    <!-- container right side  -->
+    <div class="flex-1 overflow-y-hidden scroll-auto bg-white">
 
       <section id="sec1" class="h-[100%] ">
         <div class="flex items-center justify-between pt-4">
@@ -381,7 +381,7 @@
       </section>
 
       <section id="sec3" class="h-[100%] relative">
-        <div class="flex items-center justify-between h-[5%] px-7 pt-4">
+        <div class="flex items-center justify-between h-[6%] px-7">
           <h1 class="text-4xl font-semibold font-sans ">Equipment</h1>
           <div class="flex items-center gap-5">
             <div class="border rounded-full text-purple-600 relative">
@@ -431,7 +431,7 @@
           </div>
         </div>
 
-        <div class="h-[95%]">
+        <div class="h-[94%]">
 
         </div>
 
@@ -495,15 +495,23 @@
       </section>
 
       <section id="sec5" class="h-[100%]">
-        <h1 class="text-4xl font-semibold font-sans ">Activity Log</h1>
+        <div class="flex items-center justify-between h-[6%] px-7">
+          <h1 class="text-4xl font-semibold font-sans ">Activity Log</h1>
+          <div></div>
+        </div>
+
+        <div id="actList" class="h-[94%] overflow-y-scroll px-7 py-5">
+     
+        </div>
+        
       </section>
     </div>
 
     </main>
 
     <div id="logoutBox" class="absolute h-screen w-screen bg-[#0000006c] top-0 hidden" onclick="logoutBox.classList.add('hidden')">
-      <div class="animate-[modernSlideUp_0.5s_ease] bg-white w-[400px] absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 rounded-xl overflow-hidden shadow-[0_0_10px_rgba(255,255,255,0.4)]" onclick="event.stopPropagation()">
-        <div class="bg-stone-100 p-5 shadow-sm">
+      <div class="animate-[modernSlideUp_0.5s_ease] bg-white w-[450px] absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 rounded-xl overflow-hidden shadow-[0_0_10px_rgba(255,255,255,0.4)]" onclick="event.stopPropagation()">
+        <div class="bg-stone-100 p-5 pt-10 shadow-sm">
           <div class="bg-red-100 h-[60px] w-[60px] rounded-full flex items-center justify-center m-auto">
             <svg class="size-10 " xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 24 24">
               <path fill="none" stroke="tomato" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.496 21H6.5c-1.105 0-2-1.151-2-2.571V5.57c0-1.419.895-2.57 2-2.57h7M16 15.5l3.5-3.5L16 8.5m-6.5 3.496h10"/>

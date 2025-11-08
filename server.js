@@ -179,7 +179,58 @@ app.get('/user/account-info', async(req, res)=>{
         console.error(error.message);
         res.json({ok:false, message: error.message});
     }
-})
+});
+
+app.post('/activity-log', async (req, res) => {
+    try {
+        const { type, activity } = req.body;
+
+        // Get current user's id
+        const getId = await pool.query(
+            "SELECT id FROM Accounts WHERE email = $1",
+            [req.session.user.email]
+        );
+
+        if (getId.rows.length === 0) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        const userId = getId.rows[0].id;
+
+        // Insert activity log
+        await pool.query(
+            "INSERT INTO Activity (type, activity, userid) VALUES ($1, $2, $3)",
+            [type, activity, userId]
+        );
+
+        res.status(200).json({success: true, message: "Activity logged successfully" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Server error" });
+    }
+});
+
+app.get('/activity-log', async (req, res) => {
+    try {
+        const result = await pool.query(`
+            SELECT 
+                a.type,
+                a.activity,
+                u.username,
+                u.email,
+                a.dateTime
+            FROM Activity a
+            JOIN Accounts u ON a.userid = u.id
+            ORDER BY a.dateTime DESC;
+        `);
+
+        res.json({ ok: true, activities: result.rows });
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({ ok: false, message: error.message });
+    }
+});
+
 
 
 
