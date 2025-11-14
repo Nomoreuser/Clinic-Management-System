@@ -182,6 +182,38 @@ document.getElementById('dropImage').addEventListener('drop',(e)=>{
     }
 });
 
+document.getElementById('create_medform').addEventListener('click', async (e) => {
+  e.preventDefault();
+
+  const name = document.getElementById('med_name').value;
+  const description = document.getElementById('med_description').value;
+  const dosage = document.getElementById('med_dosage').value;
+  const quantity = parseInt(document.getElementById('med_quantity').value);
+  const imageInput = document.getElementById('image');
+  const image = imageInput.files.length > 0 ? imageInput.files[0].name : "";
+
+  console.log({ name, description, dosage, quantity, image }); // Debug log
+
+  try {
+    const response = await fetch('http://localhost:5000/medicines', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include', // ✅ sends session cookies
+      body: JSON.stringify({ name, description, dosage, quantity, image })
+    });
+
+    const data = await response.json();
+    if (data.success) {
+      alert('Medicine added successfully!');
+    } else {
+      alert('Failed to add medicine.');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Server error occurred.');
+  }
+});
+
 // equipment form
 document.getElementById('addEquipment').addEventListener('click',()=>{
     const show = document.getElementById('addEquipForm').classList.toggle('hidden');

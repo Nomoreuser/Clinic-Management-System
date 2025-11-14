@@ -109,9 +109,11 @@ app.post("/users/account-check", async (req, res) => {
     return res.json({ exists: result.rows.length > 0});
 
     } catch (err) {
-        console.error("CHECK EMAIL ERROR:", error.message);
-        res.status(500).json({ error: "Server error" });
-    }
+    console.error("CHECK EMAIL ERROR:", err.message); // ✅ Corrected
+    res.status(500).json({ error: "Server error" });
+}
+
+
 });
 
 //login 
@@ -231,7 +233,43 @@ app.get('/activity-log', async (req, res) => {
     }
 });
 
+app.post('/medicines', async (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).json({ error: "User not logged in" });
+  }
 
+  const { name, description, dosage, quantity, image } = req.body;
+
+  if (!name || !description) {
+    return res.status(400).json({ error: "Name and description are required" });
+  }
+
+  try {
+    // Get user ID from session
+    const userResult = await pool.query(
+      "SELECT id FROM Accounts WHERE email = $1",
+      [req.session.user.email]
+    );
+
+    if (userResult.rows.length === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const added_by = userResult.rows[0].id;
+
+    // Insert medicine
+    const result = await pool.query(
+      `INSERT INTO Medicines (name, description, dosage, quantity, image, added_by)
+       VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+      [name, description, dosage, quantity, image, added_by]
+    );
+
+    res.status(201).json({ success: true, medicine: result.rows[0] });
+  } catch (err) {
+    console.error("Error inserting medicine:", err); // ✅ full error object
+    res.status(500).json({ error: "Failed to add medicine" });
+  }
+});
 
 
 // add up on this not this bellow : >> ok

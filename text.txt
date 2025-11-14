@@ -29,3 +29,31 @@ SELECT
 FROM Activity a
 JOIN Accounts u ON a.userid = u.id
 ORDER BY a.dateTime DESC;
+
+
+
+CREATE TABLE Medicines (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  description TEXT NOT NULL,
+  dosage VARCHAR(100),
+  quantity INT DEFAULT 0,
+  image VARCHAR(255),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  added_by INT REFERENCES Accounts(id) 
+);
+
+SELECT 
+  m.name,
+  m.description,
+  m.dosage,
+  m.quantity,
+  m.image,
+  m.created_at,
+  u.username,
+  u.email
+FROM Medicines m
+JOIN Accounts u ON m.added_by = u.id
+ORDER BY m.created_at DESC;
+
+
