@@ -11,10 +11,20 @@ import session from "express-session";
 
 import pool from "./db.js";
 
+import multer from 'multer';
+import fs from 'fs';
+
+
 // ✅ Recreate __dirname and __filename for ES Modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, path.join(__dirname, 'uploads')),
+  filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
+});
+
+const upload = multer({ storage });
 
 const app = express();
 const PORT = 5000;
@@ -233,48 +243,143 @@ app.get('/activity-log', async (req, res) => {
     }
 });
 
-app.post('/medicines', async (req, res) => {
-  if (!req.session.user) {
-    return res.status(401).json({ error: "User not logged in" });
-  }
 
-  const { name, description, dosage, quantity, image } = req.body;
+////////////////////////////////////////////////////////////////////////
+app.post('/medicines', upload.single('image'), async (req, res) => {
+  const { name, description, dosage, quantity } = req.body;
+  const image = req.file ? req.file.filename : null;
 
-  if (!name || !description) {
-    return res.status(400).json({ error: "Name and description are required" });
+  if (!name) {
+    return res.status(400).json({ error: "Name required" });
   }
 
   try {
-    // Get user ID from session
-    const userResult = await pool.query(
-      "SELECT id FROM Accounts WHERE email = $1",
-      [req.session.user.email]
-    );
-
-    if (userResult.rows.length === 0) {
-      return res.status(404).json({ error: "User not found" });
-    }
-
-    const added_by = userResult.rows[0].id;
-
-    // Insert medicine
     const result = await pool.query(
-      `INSERT INTO Medicines (name, description, dosage, quantity, image, added_by)
-       VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
-      [name, description, dosage, quantity, image, added_by]
+      `INSERT INTO Medicines (name, description, dosage, quantity, image)
+       VALUES ($1, $2, $3, $4, $5) RETURNING *`,
+      [name, description, dosage, quantity, image]
     );
-
     res.status(201).json({ success: true, medicine: result.rows[0] });
   } catch (err) {
-    console.error("Error inserting medicine:", err); // ✅ full error object
+    console.error("Error adding medicine:", err);
     res.status(500).json({ error: "Failed to add medicine" });
   }
 });
 
+app.get('/medicines', async(req, res) => {
+
+    try{
+        const result = await pool.query(
+            "SELECT * FROM Medicines ORDER BY created_at DESC"
+        )
+        res.json({ok: true, meds: result.rows})
+    }catch(err){
+        console.error("GET Medicines: ", err)
+    }
+});
+
+app.delete("/medicines/:id", async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        // 1. Get medicine image filename from DB
+        const result = await pool.query(
+            "SELECT image FROM medicines WHERE id = $1",
+            [id]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ success: false, message: "Not found" });
+        }
+
+        const imageFilename = result.rows[0].image;
+
+        // 2. Delete DB row
+        await pool.query("DELETE FROM medicines WHERE id = $1", [id]);
+
+        // 3. Delete physical file from uploads
+        if (imageFilename) {
+            const imagePath = path.join(__dirname, "uploads", imageFilename);
+
+            if (fs.existsSync(imagePath)) {
+                fs.unlinkSync(imagePath);
+            }
+        }
+
+        res.json({ success: true, message: "Deleted successfully" });
+
+    } catch (err) {
+        console.error("DELETE ERROR:", err);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
+});
+
+app.put("/medicines/:id", upload.single("image"), async (req, res) => {
+    const id = req.params.id;
+    const { name, description, dosage, quantity, removeImage } = req.body;
+
+    if (!name) {
+        return res.status(400).json({ error: "Name required" });
+    }
+
+    try {
+        // 1. Get existing medicine
+        const result = await pool.query(
+            "SELECT image FROM Medicines WHERE id = $1",
+            [id]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ success: false, message: "Medicine not found" });
+        }
+
+        const oldImage = result.rows[0].image;
+        let newImage = oldImage;
+
+        // 2. If new file uploaded → use new image
+        if (req.file) {
+            newImage = req.file.filename;
+
+            // delete old image
+            if (oldImage) {
+                const oldPath = path.join(__dirname, "uploads", oldImage);
+                if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+            }
+        }
+
+        // 3. If removeImage = "true" → delete old image + set to null
+        if (removeImage === "true") {
+            if (oldImage) {
+                const oldPath = path.join(__dirname, "uploads", oldImage);
+                if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+            }
+            newImage = null;
+        }
+
+        // 4. Update DB
+        await pool.query(
+            `UPDATE Medicines
+             SET name = $1, description = $2, dosage = $3, quantity = $4, image = $5
+             WHERE id = $6`,
+            [name, description, dosage, quantity, newImage, id]
+        );
+
+        res.json({ success: true, message: "Medicine updated successfully" });
+
+    } catch (err) {
+        console.error("UPDATE ERROR:", err);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
+});
+
+
+
 
 // add up on this not this bellow : >> ok
 app.use(express.static("public"));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.static("AdminSystem"));
+app.use(express.static("StudentSystem"));
 
 app.get("/",(req,res)=>{
     res.sendFile("index.html", {root: "public"});
@@ -293,7 +398,9 @@ app.get("/login", (req,res)=>{
 app.get("/inventory", (req,res)=>{
     res.sendFile(path.join(__dirname, "AdminSystem/mg.html"));
 })
-
+app.get("/student", (req, res)=>{
+    res.sendFile(path.join(__dirname, "StudentSystem/student.html"))
+})
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);

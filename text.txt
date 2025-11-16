@@ -14,7 +14,7 @@ CREATE TABLE Accounts (
 CREATE TABLE Activity (
     id SERIAL PRIMARY KEY,
     type VARCHAR(99) NOT NULL,
-    activity VARCHAR(255) NOT NULL,
+    activity TEXT NOT NULL,
     userid INT NOT NULL REFERENCES Accounts(id),
     dateTime TIMESTAMP DEFAULT NOW()
 );
@@ -40,7 +40,6 @@ CREATE TABLE Medicines (
   quantity INT DEFAULT 0,
   image VARCHAR(255),
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  added_by INT REFERENCES Accounts(id) 
 );
 
 SELECT 
