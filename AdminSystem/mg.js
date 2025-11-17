@@ -999,7 +999,8 @@ document.getElementById('itemBox').addEventListener('click',()=>{
 
 document.addEventListener('DOMContentLoaded',()=>{
     let savedlayout = localStorage.getItem('layout');
-    if(savedlayout == ''){
+    
+    if(savedlayout == null){
         localStorage.setItem('layout','box');
     }
 
