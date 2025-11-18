@@ -1,80 +1,67 @@
 
 
-// function Verify(){
-//   if(studentID.value == ""){
-//     alert("Please enter your Student ID")
-//   }else if(studentID.value.length < 11){
-//     alert("11 chars")
-//   }else{
-//     window.location.href="main.html";
-//   }
-// }
+// https://students-sample-api.vercel.app/api/students
 
-// const hi = "greet";
+async function check(id) {
 
-const students = [{
-  student_id:"23-0324-276",
-  first_name:"Gerald",
-  middle_name:"Albon",
-  last_name:"Carvajal",
-  course:"Bachelor of Science in Information Technolog",
-  year:"3rd Year"
-}];
+  try {
+    const res = await fetch(`https://students-sample-api.vercel.app/api/students?id=${id}`);
 
-function check(){
+    console.log("Response status:", res.status);
 
-  document.getElementById("info").innerHTML = ``;
+    if (!res.ok) {
+      alert("Student not found!");
+      return;
+    }
 
-  let get = students.filter(i => i.student_id === studentID.value);
+    const data = await res.json();
+    console.log("Data received:", data);
 
-  if(studentID.value.length < 11){
-    // alert("11 chars")
-    exit;
-  }else if(get.length < 1){
-    alert("cant find id!")
-    exit;
+    alert("FOUND: " + data.fullName );
+
+    document.getElementById("info").innerHTML = "";
+    document.getElementById("info").innerHTML = `
+      <div style="padding: 10px 15px;background-color: rgba(43, 149, 255, 1);display: flex;align-items:center;gap:10px">
+        <i class="fas fa-user-graduate" style="background-color: rgba(255, 255, 255, .4);color: white;padding: 5px;font-size: 24px;border-radius: 5px"></i>
+        <div style="color:white">
+          <h3 style="margin:0">Student Verification</h3>
+          <p style="margin:0">Please check if this is your going to use.</p>
+        </div>  
+      </div>
+
+      <div style="margin: 10px">
+        <div class="infoItem">
+          <div class="infos">Student ID: </div>
+          <div class="data">${data.studentId}</div>
+        </div>
+        <div class="infoItem">
+          <div class="infos">Full Name: </div>
+          <div class="data">${data.fullName}</div>
+        </div>
+        <div class="infoItem">
+          <div class="infos">Course/Strand: </div>
+          <div class="data">${data.course} - ${data.yearLevel}</div>
+        </div>
+
+        <div style="display: flex;justify-content: flex-end; gap: 15px">
+          <button onclick="check()">Cancel</button>
+          <button onclick="window.location.href='main.html'">Confirm & Proceed</button>
+        </div>
+      </div>
+    `;
+
+  } catch (error) {
+    console.log("FETCH ERROR:", error);
+    alert("Fetch failed. Check console.");
   }
 
-  get.map(i=>{
-    document.getElementById("info").innerHTML = `
-    
-    <div style="padding: 10px 15px;background-color: rgba(43, 149, 255, 1);display: flex;align-items:center;gap:10px">
-      <i class="fas fa-user-graduate" style="background-color: rgba(255, 255, 255, .4);color: white;padding: 5px;font-size: 24px;border-radius: 5px"></i>
-      <div style="color:white">
-        <h3 style="margin:0">Student Verification</h3>
-        <p style="margin:0">Please check if this is your going to use.</p>
-      </div>  
-    </div>
-
-    <div style="margin: 10px">
-      <div class="infoItem">
-        <div class="infos">Student ID: </div>
-        <div class="data">${i.student_id}</div>
-      </div>
-      <div class="infoItem">
-        <div class="infos">Full Name: </div>
-        <div class="data">${i.first_name} ${i.middle_name} ${i.last_name}</div>
-      </div>
-      <div class="infoItem">
-        <div class="infos">Course/Strand: </div>
-        <div class="data">${i.course} - ${i.year}</div>
-      </div>
-
-      <div style="display: flex;justify-content: flex-end; gap: 15px">
-        <button onclick="check()">Cancel</button>
-        <button onclick="window.location.href='main.html'">Confirm & Proceed</button>
-      </div>
-    </div>`;
-  });
-  
-  studentID.value = "";
+  studID.value = "";
 }
 
 
 
 document.addEventListener("keydown", (e)=>{
   if(e.key == "Enter"){
-    check();
+    check(studID.value);
   }
-  exit;
 })

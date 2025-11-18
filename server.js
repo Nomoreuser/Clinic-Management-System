@@ -223,25 +223,42 @@ app.post('/activity-log', async (req, res) => {
 });
 
 app.get('/activity-log', async (req, res) => {
+    const type = req.query.type;
+
     try {
-        const result = await pool.query(`
+        let query = `
             SELECT 
                 a.type,
                 a.activity,
+                a.datetime,
                 u.username,
-                u.email,
-                a.dateTime
+                u.email
             FROM Activity a
-            JOIN Accounts u ON a.userid = u.id
-            ORDER BY a.dateTime DESC;
-        `);
+            LEFT JOIN Accounts u
+            ON a.userId = u.id
+        `;
+
+        let params = [];
+
+        if (type && type !== "all") {
+            query += " WHERE a.type = $1 ORDER BY a.datetime DESC";
+            params.push(type);
+        } else {
+            query += " ORDER BY a.datetime DESC";
+        }
+
+        const result = await pool.query(query, params);
 
         res.json({ ok: true, activities: result.rows });
+
     } catch (error) {
         console.error(error.message);
         res.status(500).json({ ok: false, message: error.message });
     }
 });
+
+
+
 
 
 ////////////////////////////////////////////////////////////////////////

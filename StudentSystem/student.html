@@ -15,8 +15,8 @@
       <h2>Enter Student ID</h2>
       <p>Please enter your valid student identifaction number to continue.
       </p>
-      <input type="text" id="studentID" placeholder="eg.. 22-8324-654" maxlength="11" oninput="this.value = this.value.slice(0,11)">
-      <button type="submit" id="verifyID" onclick="check()">Verify Student</button>
+      <input type="text" id="studID" placeholder="eg.. 22-8324-654" maxlength="11" oninput="this.value = this.value.slice(0,11)">
+      <button type="submit" id="verifyID" onclick="check(studID.value.trim())">Verify Student</button>
     </div>
     
     

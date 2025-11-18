@@ -9,9 +9,16 @@ document.addEventListener('click',(e)=>{
         document.getElementById('filMedArrow').classList.remove('rotate-180');
     }
 
+    if(!document.getElementById('filterLog').contains(e.target) && !document.getElementById('dropLog').contains(e.target)){
+        document.getElementById('dropLog').classList.add('hidden');
+        document.getElementById('filLogArrow').classList.remove('rotate-180');
+    }
+
     if(!document.getElementById('filterEquip').contains(e.target) && !document.getElementById('sortEquip').contains(e.target)){
         document.getElementById('sortEquip').classList.add('hidden');
     }
+
+
 
     if(!document.getElementById('addMedicine').contains(e.target) && !document.getElementById('addMedForm').contains(e.target)){
         document.getElementById('addMedForm').classList.add('hidden');
@@ -136,9 +143,15 @@ window.addEventListener('load', () => {
 });
 
 document.getElementById('filterMed').addEventListener('click',()=>{
-    const show = document.getElementById('dropMed').classList.toggle('hidden');
+    document.getElementById('dropMed').classList.toggle('hidden');
 
-    document.getElementById('filMedArrow').classList.toggle('rotate-180',!show);
+    document.getElementById('filMedArrow').classList.toggle('rotate-180');
+})
+
+document.getElementById('filterLog').addEventListener('click', ()=>{
+    document.getElementById('dropLog').classList.toggle('hidden');
+
+    document.getElementById('filLogArrow').classList.toggle('rotate-180')
 })
 
 document.getElementById('filterEquip').addEventListener('click',()=>{
@@ -1080,10 +1093,19 @@ function type(i){
 
 }
 
-async function activity() {
+async function activity(sort = "all") {
+
+    document.querySelectorAll('.slg').forEach(btn =>{
+        btn.classList.remove("bg-blue-100")
+        btn.addEventListener('click', ()=>{
+            btn.classList.add("bg-blue-100")
+        })
+    })
+    if(sort == "all") document.querySelectorAll('.slg')[0].classList.add('bg-blue-100');
+
     document.getElementById('actil').innerHTML = "";
 
-    const res = await fetch('http://localhost:5000/activity-log', {credentials: "include"});
+    const res = await fetch(`http://localhost:5000/activity-log?type=${sort}`, {credentials: "include"});
     const result = await res.json()
 
     console.log(result);
