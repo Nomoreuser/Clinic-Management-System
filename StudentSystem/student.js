@@ -14,12 +14,25 @@ async function check(id) {
       return;
     }
 
-    const data = await res.json();
+    // --- GET RAW RESPONSE FIRST ---
+    const raw = await res.text();
+    console.log("RAW RESPONSE:", raw);
+
+    let data;
+
+    // --- TRY TO PARSE JSON SAFELY ---
+    try {
+      data = JSON.parse(raw);
+    } catch (err) {
+      console.log("JSON PARSE ERROR:", err);
+      alert("SERVER ERROR: API returned invalid JSON.");
+      return;
+    }
+
     console.log("Data received:", data);
 
-    alert("FOUND: " + data.fullName );
+    alert("FOUND: " + data.fullName);
 
-    document.getElementById("info").innerHTML = "";
     document.getElementById("info").innerHTML = `
       <div style="padding: 10px 15px;background-color: rgba(43, 149, 255, 1);display: flex;align-items:center;gap:10px">
         <i class="fas fa-user-graduate" style="background-color: rgba(255, 255, 255, .4);color: white;padding: 5px;font-size: 24px;border-radius: 5px"></i>
