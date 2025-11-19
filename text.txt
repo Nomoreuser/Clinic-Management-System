@@ -19,19 +19,6 @@ CREATE TABLE Activity (
     dateTime TIMESTAMP DEFAULT NOW()
 );
 
-
-SELECT 
-    a.type,
-    a.activity,
-    u.username,
-    u.email,
-    a.dateTime
-FROM Activity a
-JOIN Accounts u ON a.userid = u.id
-ORDER BY a.dateTime DESC;
-
-
-
 CREATE TABLE Medicines (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
@@ -42,17 +29,11 @@ CREATE TABLE Medicines (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 );
 
-SELECT 
-  m.name,
-  m.description,
-  m.dosage,
-  m.quantity,
-  m.image,
-  m.created_at,
-  u.username,
-  u.email
-FROM Medicines m
-JOIN Accounts u ON m.added_by = u.id
-ORDER BY m.created_at DESC;
-
-
+CREATE TABLE Records(
+	id SERIAL,
+	studentId VARCHAR(99),
+	type VARCHAR(99),
+	itemName  VARCHAR(255),
+	qty INT,
+	dateCreated TIMESTAMP DEFAULT NOW()
+)

@@ -258,9 +258,6 @@ app.get('/activity-log', async (req, res) => {
 });
 
 
-
-
-
 ////////////////////////////////////////////////////////////////////////
 app.post('/medicines', upload.single('image'), async (req, res) => {
   const { name, description, dosage, quantity } = req.body;
@@ -389,9 +386,24 @@ app.put("/medicines/:id", upload.single("image"), async (req, res) => {
     }
 });
 
+app.post('/records', async(req, res)=>{
+    const {studentId, type, itemName, qty} = req.body;
+
+    try{
+
+        await pool.query('INSERT INTO Records (studentid, type, itemname, qty) VALUES($1, $2, $3, $4) RETURNING *',
+            [studentId, type, itemName, qty]
+        )
+
+        res.json({ok: true, message: "success"});
+    }catch(error){
+        console.log("Records: " + error);
+        res.json({ok: false, message: "error"});
+    }
+})
 
 
-
+// ///////////////////////////////////////////////////////////////////////////////
 // add up on this not this bellow : >> ok
 app.use(express.static("public"));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));

@@ -42,7 +42,7 @@ body{
     width: 100vw;
     overflow: hidden;
 
-    background: linear-gradient(rgba(54, 54, 255, 0.4), rgba(52, 52, 255, 0.4)), url('https://c4.wallpaperflare.com/wallpaper/58/63/715/hospital-bed-arsenixc-artwork-wallpaper-preview.jpg'),no-repeat center;
+    background: linear-gradient(rgba(190, 190, 255, 0.54), rgba(52, 52, 255, 0.4)), url('https://c4.wallpaperflare.com/wallpaper/58/63/715/hospital-bed-arsenixc-artwork-wallpaper-preview.jpg'),no-repeat center;
     background-size: cover;
 
     user-select: none;
@@ -52,7 +52,7 @@ nav{
     display: flex;
     justify-content: center;
     gap: 30px;
-    margin: 50px 0 20px 0;
+    margin: 0 0 20px 0;
 }
 nav div{
     padding: 10px;
@@ -81,8 +81,8 @@ nav div:hover{
 
 main{
     background-color: rgba(255, 255, 255, 0.3);
-    height: 80%;
-    width: 80%;
+    height: 83%;
+    width: 85%;
     margin: auto;
 
     backdrop-filter: blur(3px);
@@ -115,11 +115,11 @@ main h3{
 #medItems{
     display: flex;
     box-sizing: border-box;
-    justify-content: space-evenly;
+    /* justify-content: space-evenly; */
     flex-wrap: wrap;
     /* background-color: red; */
-    gap: 20px; /* optional spacing */
-    padding: 20px;
+    gap: 30px; /* optional spacing */
+    padding: 25px 35px 150px 55px;
     height: 90%;
     overflow-y: scroll;
     overflow-x: hidden;

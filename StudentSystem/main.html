@@ -7,19 +7,18 @@
     <title>Document</title>
 </head>
 <body>
-    <!-- <img id="logo" src="img/logo.png" alt="">
-    <div class="container">
-        <div id="d1">
-             <h1>Medicine</h1>
+
+    <div style="display: flex; justify-content: space-between; align-items: center; background-color: rgba(127, 255, 212, 0); padding: 0 20px; height: 80px;">
+        <h1 style="text-align: center;color:white">School Clinic </h1>
+        <div style="display:flex;align-items: center; gap:10px; background-color: rgba(236, 236, 236, 0.397); padding: 5px;border-radius: 50px; height: 50px; ">
+            <div id="studentid" style="font-weight: 800; font-size: 20px; padding: 0 10px">
+                23-0324-276
+            </div>
+            <div onclick="localStorage.setItem('studentId', '');location.reload()" style="border-radius: 100%; background-color: aliceblue; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;">
+                <svg style="transform: scale(.8);" xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>
+            </div>
         </div>
-        <div id="d2">
-             <h1>Borrowed Equipment</h1>
-        </div>
-        <div id="d3">
-              <h1>Returned Equipment</h1>
-        </div>
-    </div> -->
-    <h1 style="text-align: center;color:white">School Clinic </h1>
+    </div>
 
     <nav id="nav">
         <div id="medBTN" class="navbtn">Medicine</div>
@@ -44,11 +43,6 @@
             <hr style="margin: 0; ">
         </section>
     </main>
-
-    <a href="student.html"><button style="position: absolute; top:20px; right: 20px;border-radius: 10px;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-log-out-icon lucide-log-out"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>
-    </button></a>
-    
 
     <script src="main.js"></script>
 </body>

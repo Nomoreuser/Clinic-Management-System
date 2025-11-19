@@ -4,6 +4,8 @@
 
 async function check(id) {
 
+  if(id == "") return
+
   try {
     const res = await fetch(`https://students-sample-api.vercel.app/api/students?id=${id}`);
 
@@ -57,8 +59,8 @@ async function check(id) {
         </div>
 
         <div style="display: flex;justify-content: flex-end; gap: 15px">
-          <button onclick="check()">Cancel</button>
-          <button onclick="window.location.href='main.html'">Confirm & Proceed</button>
+          <button onclick="document.getElementById('info').innerHTML =''; studID.value=''">Cancel</button>
+          <button onclick="confirm()">Confirm & Proceed</button>
         </div>
       </div>
     `;
@@ -67,11 +69,12 @@ async function check(id) {
     console.log("FETCH ERROR:", error);
     alert("Fetch failed. Check console.");
   }
-
-  studID.value = "";
 }
 
-
+function confirm(){
+  localStorage.setItem("studentId", studID.value);
+  window.location.href='main.html';
+}
 
 document.addEventListener("keydown", (e)=>{
   if(e.key == "Enter"){
