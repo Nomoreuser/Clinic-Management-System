@@ -387,20 +387,155 @@ app.put("/medicines/:id", upload.single("image"), async (req, res) => {
 });
 
 app.post('/records', async(req, res)=>{
-    const {studentId, type, itemName, qty} = req.body;
+    const {studentId, type, itemName, qty, itemId} = req.body;
 
     try{
-
         await pool.query('INSERT INTO Records (studentid, type, itemname, qty) VALUES($1, $2, $3, $4) RETURNING *',
             [studentId, type, itemName, qty]
         )
+
+        if(type == "get"){
+            await pool.query(
+                `UPDATE Medicines SET quantity = quantity - $1 WHERE id = $2 AND quantity >= $1`,
+                [qty, itemId]
+            );
+        }
 
         res.json({ok: true, message: "success"});
     }catch(error){
         console.log("Records: " + error);
         res.json({ok: false, message: "error"});
     }
-})
+});
+
+// Equipments
+//////////////////////////////////////////////////////////////////////
+app.post('/equipments', upload.single('image'), async (req, res) => {
+  const { name, description, quantity } = req.body;
+  const image = req.file ? req.file.filename : null;
+
+  if (!name) {
+    return res.status(400).json({ error: "Name required" });
+  }
+
+  try {
+    const result = await pool.query(
+      `INSERT INTO Equipments (name, description, quantity, image)
+       VALUES ($1, $2, $3, $4) RETURNING *`,
+      [name, description, quantity, image]
+    );
+    res.status(201).json({ success: true, message: "success"});
+  } catch (err) {
+    console.error("Error adding medicine:", err);
+    res.status(500).json({ error: "Failed to add medicine" });
+  }
+});
+
+app.get('/equipments', async(req, res) => {
+
+    try{
+        const result = await pool.query(
+            "SELECT * FROM Equipments ORDER BY created_at DESC"
+        )
+        res.json({ok: true, equips: result.rows})
+    }catch(err){
+        console.error("GET Equipments: ", err)
+    }
+});
+
+app.delete("/equipments/:id", async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        // 1. Get medicine image filename from DB
+        const result = await pool.query(
+            "SELECT image FROM equipments WHERE id = $1",
+            [id]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ success: false, message: "Not found" });
+        }
+
+        const imageFilename = result.rows[0].image;
+
+        // 2. Delete DB row
+        await pool.query("DELETE FROM equipments WHERE id = $1", [id]);
+
+        // 3. Delete physical file from uploads
+        if (imageFilename) {
+            const imagePath = path.join(__dirname, "uploads", imageFilename);
+
+            if (fs.existsSync(imagePath)) {
+                fs.unlinkSync(imagePath);
+            }
+        }
+
+        res.json({ success: true, message: "Deleted successfully" });
+
+    } catch (err) {
+        console.error("DELETE ERROR:", err);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
+});
+
+app.put("/equipments/:id", upload.single("image"), async (req, res) => {
+    const id = req.params.id;
+    const { name, description, quantity, removeImage } = req.body;
+
+    if (!name) {
+        return res.status(400).json({ error: "Name required" });
+    }
+
+    try {
+        // 1. Get existing medicine
+        const result = await pool.query(
+            "SELECT image FROM Equipments WHERE id = $1",
+            [id]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ success: false, message: "Equipments not found" });
+        }
+
+        const oldImage = result.rows[0].image;
+        let newImage = oldImage;
+
+        // 2. If new file uploaded → use new image
+        if (req.file) {
+            newImage = req.file.filename;
+
+            // delete old image
+            if (oldImage) {
+                const oldPath = path.join(__dirname, "uploads", oldImage);
+                if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+            }
+        }
+
+        // 3. If removeImage = "true" → delete old image + set to null
+        if (removeImage === "true") {
+            if (oldImage) {
+                const oldPath = path.join(__dirname, "uploads", oldImage);
+                if (fs.existsSync(oldPath)) fs.unlinkSync(oldPath);
+            }
+            newImage = null;
+        }
+
+        // 4. Update DB
+        await pool.query(
+            `UPDATE Equipments
+             SET name = $1, description = $2, quantity = $3, image = $4
+             WHERE id = $5`,
+            [name, description, quantity, newImage, id]
+        );
+
+        res.json({ success: true, message: "Equipments updated successfully" });
+
+    } catch (err) {
+        console.error("UPDATE ERROR:", err);
+        res.status(500).json({ success: false, message: "Server error" });
+    }
+});
 
 
 // ///////////////////////////////////////////////////////////////////////////////

@@ -35,9 +35,9 @@ document.addEventListener('click',(e)=>{
 
 
     //this is for confirm delete medicine hide it click outside the parent
-    if (medId && !document.getElementById(medId).contains(e.target)) {
-        document.getElementById(medId).classList.add('hidden');
-        medId = "";
+    if (itemId && !document.getElementById(itemId).contains(e.target)) {
+        document.getElementById(itemId).classList.add('hidden');
+        itemId = "";
     }
 
 })
@@ -189,9 +189,6 @@ document.getElementById('dropImage').addEventListener('click',()=>{
 document.getElementById('image').addEventListener('change',(e)=>{
     e.preventDefault();
 
-    // const img = e.target.files[0];
-    // alert(`${img.name}`)
-    // alert('hi')
     renderImg(e.target.files[0], "add")
 });
 
@@ -235,16 +232,16 @@ document.getElementById('create_medform').addEventListener('click', async (e) =>
         return alert(`Cannot add. Medicine "${med_name.value}" with dosage "${med_dosage.value}" already exists.`);
     }
 
-  const formData = new FormData();
+    const formData = new FormData();
 
-  formData.append('name', document.getElementById('med_name').value);
-  formData.append('description', document.getElementById('med_description').value);
-  formData.append('dosage', document.getElementById('med_dosage').value);
-  formData.append('quantity', document.getElementById('med_quantity').value);
+    formData.append('name', document.getElementById('med_name').value);
+    formData.append('description', document.getElementById('med_description').value);
+    formData.append('dosage', document.getElementById('med_dosage').value);
+    formData.append('quantity', document.getElementById('med_quantity').value);
 
-  // REAL IMAGE FILE
-  const file = document.getElementById('image').files[0];
-  if (file) formData.append('image', file);
+    // REAL IMAGE FILE
+    const file = document.getElementById('image').files[0];
+    if (file) formData.append('image', file);
 
     try {
         const response = await fetch('http://localhost:5000/medicines', {
@@ -306,9 +303,6 @@ document.getElementById('dropImageEquip').addEventListener('click',()=>{
 document.getElementById('imageEquip').addEventListener('change',(e)=>{
     e.preventDefault();
 
-    // const img = e.target.files[0];
-    // alert(`${img.name}`)
-    // alert('hi')
     renderImg(e.target.files[0], "equipment")
 });
 
@@ -316,49 +310,37 @@ document.getElementById('imageEquip').addEventListener('change',(e)=>{
 document.getElementById('dropImageEquip').addEventListener('drop',(e)=>{
     e.preventDefault();
 
+    // const img = e.dataTransfer.files[0];
+
+    // if (img && img.type.startsWith('image/')) {
+    //   renderImg(img, "equipment");
+    // } else {
+    //   alert('Please drop an image file.');
+    // }
+
     const img = e.dataTransfer.files[0];
 
     if (img && img.type.startsWith('image/')) {
-    //   alert(`     dropped: ${img.name}`);
-      renderImg(img, "equipment");
+
+        // FIX: Put the dropped file into #eimage input
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(img);
+        document.getElementById('imageEquip').files = dataTransfer.files;
+
+        renderImg(img, "equipment");
     } else {
       alert('Please drop an image file.');
     }
 });
 
 
-
-// function renderImg(img){
-//     // alert("hello")
-//     if(!img){
-//         alert('No images '+img);
-//         removeImg('edit')
-//         return;
-//     }
-//     const read = new FileReader();
-
-//     read.addEventListener('load',()=>{
-//         //medicine
-//         document.getElementById('pImg').src = read.result;
-//         document.getElementById('dropImage').classList.add('hidden');
-//         document.getElementById('previewImage').classList.remove('hidden');
-
-//         document.getElementById('epImg').src = read.result;
-//         document.getElementById('edropImage').classList.add('hidden');
-//         document.getElementById('epreviewImage').classList.remove('hidden');
-
-//         //equip
-//         document.getElementById('pImgEquip').src = read.result;
-//         document.getElementById('dropImageEquip').classList.add('hidden');
-//         document.getElementById('previewImageEquip').classList.remove('hidden');
-//     })
-//     read.readAsDataURL(img);
-// }
 function renderImg(img, type = "edit") {
 
     if (!img) {
         removeImg("edit");
         removeImg("add");
+        removeImg("addE");
+        removeImg("editE");
         return;
     }
 
@@ -383,6 +365,13 @@ function renderImg(img, type = "edit") {
             document.getElementById('dropImageEquip').classList.add('hidden');
             document.getElementById('previewImageEquip').classList.remove('hidden');
         }
+
+        if (type === "equipmentEdit") {
+            document.getElementById('epImgEquip').src = read.result;
+            document.getElementById('edropImageEquip').classList.add('hidden');
+            document.getElementById('epreviewImageEquip').classList.remove('hidden');
+        }
+
     };
 
     read.readAsDataURL(img);
@@ -405,6 +394,10 @@ function removeInput(){
     document.getElementById('dropImage').style.borderColor = " #e7e5e4"
 
     //equipment
+    document.getElementById('equip_name').value = '';
+    document.getElementById('equip_description').value = '';
+    document.getElementById('equip_quantity').value = '';
+
     document.getElementById('imageEquip').value = '';
     document.getElementById('dropImageEquip').classList.remove('hidden');
     document.getElementById('previewImageEquip').classList.add('hidden');
@@ -450,6 +443,19 @@ function removeImg(formType){
         document.getElementById('dropImageEquip').classList.remove('bg-[#f0f5ffff]')
         document.getElementById('dropImageEquip').classList.add('bg-[#f9fbffff]')
         document.getElementById('dropImageEquip').style.borderColor = " #e7e5e4"
+    }
+
+    if(formType === "editE"){
+        document.getElementById('eimageEquip').value = '';
+        document.getElementById('edropImageEquip').classList.remove('hidden');
+        document.getElementById('epreviewImageEquip').classList.add('hidden');
+
+        document.getElementById('edropImageEquip').classList.remove('bg-[#f0f5ffff]')
+        document.getElementById('edropImageEquip').classList.add('bg-[#f9fbffff]')
+        document.getElementById('edropImageEquip').style.borderColor = " #e7e5e4";
+
+        window.removeImageClicked = true;
+        document.getElementById('existingImage').value = "";
     }
 }
 
@@ -589,7 +595,7 @@ async function renderListMed(i){
                             <button class="w-[30%] bg-green-500 py-2 rounded-xl hover:-translate-y-1 hover:bg-green-400 shadow-sm">Dispense</button>
                             <button class="w-[30%] bg-red-500 py-2 rounded-xl hover:-translate-y-1 hover:bg-red-400 shadow-sm" 
                                 onclick="document.querySelectorAll('[id^=medDelBtn]').forEach(el => el.classList.add('hidden'));event.stopPropagation(); document.getElementById('medDelBtn${med.id}').classList.remove('hidden'); 
-                                medId = 'medDelBtn${med.id}'">Delete</button>
+                                itemId = 'medDelBtn${med.id}'">Delete</button>
                         </div>
                     </div>
                     <div id="medDelBtn${med.id}" class="absolute bg-[rgba(249,249,249,0.84)] py-10 h-full w-full top-0 left-0 hidden transition-all duration-500"
@@ -716,7 +722,7 @@ async function renderListMed(i){
     }
 }
 
-let medId = ""; //dont remove this i use this as id elemt
+let itemId = ""; //dont remove this i use this as id for med and equip : > )
 async function confirmDelMed(e,id) {
     e.stopPropagation();
 
@@ -773,73 +779,8 @@ async function editMedicineForm(e,id,name,description,dosage,quantity,image){
         document.getElementById('epreviewImage').classList.add('hidden');
     }
     
-    medId = id;
+    itemId = id;
 }
-
-// document.getElementById('ecreate_medform').addEventListener('click', async (e) => {
-//     e.preventDefault();
-
-//     if (!emed_name.value.trim() || !emed_dosage.value.trim() || !emed_quantity.value) {
-//         return alert('Fill all required fields');
-//     }
-
-//     const id = medId;
-
-//     // Get current medicine data
-//     const resm = await fetch('http://localhost:5000/medicines', { credentials: 'include' });
-//     const medData = await resm.json();
-//     const mfo = medData.meds.find(i => i.id == id);
-
-//     // Build short activity log for name and quantity
-//     let actChanges = [];
-
-//     if (mfo.name !== emed_name.value) {
-//         actChanges.push(`Name: "${mfo.name}" → "${emed_name.value}"`);
-//     }
-
-//     if (mfo.quantity !== Number(emed_quantity.value)) {
-//         actChanges.push(`Qty: ${mfo.quantity} → ${emed_quantity.value}`);
-//     }
-
-//     const act = actChanges.length > 0 ? actChanges.join(", ") : "No changes";
-
-//     // Prepare FormData
-//     const formData = new FormData();
-//     formData.append("name", emed_name.value);
-//     formData.append("description", emed_description.value);
-//     formData.append("dosage", emed_dosage.value);
-//     formData.append("quantity", emed_quantity.value);
-
-//     const file = document.getElementById('eimage').files[0];
-//     const oldImage = document.getElementById('existingImage').value;
-
-//     if (file) {
-//         formData.append("image", file);
-//     } else {
-//         formData.append("existingImage", oldImage);
-//     }
-
-//     if (window.removeImageClicked === true) {
-//         formData.append("removeImage", "true");
-//     }
-
-//     // Save activity log
-//     await fetch('http://localhost:5000/activity-log', {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify({ type: "editM", activity: act }),
-//         credentials: "include"
-//     });
-
-//     // Update medicine
-//     const response = await fetch(`http://localhost:5000/medicines/${id}`, {
-//         method: "PUT",
-//         body: formData
-//     });
-
-//     const data = await response.json();
-//     if (data.success) location.reload();
-// });
 
 document.getElementById('ecreate_medform').addEventListener('click', async(e) => {
     e.preventDefault();
@@ -848,7 +789,7 @@ document.getElementById('ecreate_medform').addEventListener('click', async(e) =>
         return alert('Fill all required fields');
     }
 
-    const id = medId;
+    const id = itemId;
 
     // Fetch current data
     const resm = await fetch('http://localhost:5000/medicines', { credentials: 'include' });
@@ -1139,5 +1080,349 @@ async function activity(sort = "all") {
 
 activity()
 
+////////////////////////////////////////////////////////////////////////////////////////////
+
+document.getElementById('create_equip').addEventListener('click', async (e) => {
+    e.preventDefault();
+
+    if(!document.getElementById('equip_name').value|| !document.getElementById('equip_quantity').value){
+        return alert("Complete fill form!")
+    }
+  
+    const rese = await fetch('http://localhost:5000/equipments', { credentials: 'include' });
+    const eqData = await rese.json();
+
+    // check if exist already
+    const duplicate = eqData.equips.find(e =>
+        e.name.toLowerCase() === equip_name.value.toLowerCase()
+    );
+
+    if (duplicate) {
+        return alert(`Cannot add. Equipments "${equip_name.value}"  already exists.`);
+    }
+
+    const formData = new FormData();
+
+    formData.append('name', document.getElementById('equip_name').value);
+    formData.append('description', document.getElementById('equip_description').value);
+    formData.append('quantity', document.getElementById('equip_quantity').value);
+
+    // REAL IMAGE FILE
+    const file = document.getElementById('imageEquip').files[0];
+    if (file) formData.append('image', file);
+
+    try {
+        const response = await fetch('http://localhost:5000/equipments', {
+            method: 'POST',
+            body: formData
+            // ❌ DO NOT add headers — FormData sets them automatically
+        });
+
+        const data = await response.json();
+
+        alert(data.ok)
+        if (data.success) {
+            addEquipForm.classList.add('hidden');
+
+            await fetch('http://localhost:5000/activity-log', {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ type: "addM", activity: `Added medicine ${med_name.value} ${med_dosage.value}`}),
+                credentials: "include"
+            });
+
+            location.reload();
+        } else {
+            alert('Failed to add medicine.'+ data.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Server error occurred.');
+    }
+});
+
+async function confirmDelEquip(e,id) {
+    e.stopPropagation();
+
+    const res = await fetch('http://localhost:5000/equipments', {credentials: 'include'});
+    const eqData = await res.json();
+
+    const efo = eqData.equips.find(i => i.id == id)
+
+    console.log(efo)
+
+    const ss = await fetch('http://localhost:5000/activity-log', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "deleteE", activity: `Deleted equipment item ${efo.name}`}),
+        credentials: "include"
+    });
+
+    const result = await ss.json();
+    if (!ss.ok) return alert("Error logging activity: " + result.error);
+    
+    const response = await fetch(`http://localhost:5000/equipments/${id}`, {
+        method: "DELETE",
+        credentials: "include"
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+        // alert("Medicine deleted!");
+        location.reload();
+    } else {
+        alert("Failed to delete.");
+    }
+}
+
+async function editEquipmentForm(e,id,name,description,quantity,image){
+    e.stopPropagation()
+    document.getElementById('editEquipForm').classList.remove('hidden');
+    
+    document.getElementById('eequip_name').value = name;
+    document.getElementById('eequip_description').value = description;
+    document.getElementById('eequip_quantity').value = quantity;
+    
+    if(image != 'null'){
+        document.getElementById('epImgEquip').src = `http://localhost:5000/uploads/${image}`;
+        document.getElementById('edropImageEquip').classList.add('hidden');
+        document.getElementById('epreviewImageEquip').classList.remove('hidden');
+        
+        document.getElementById('existingImage').value = image;  // ← save old image name
+    }else{
+        document.getElementById('existingImage').value = "";
+        document.getElementById('edropImageEquip').classList.remove('hidden');
+        document.getElementById('epreviewImageEquip').classList.add('hidden');
+    }
+    
+    itemId = id;
+}
+
+document.getElementById('ecreate_equip').addEventListener('click', async(e) => {
+    e.preventDefault();
+
+    if (!eequip_name.value || !eequip_quantity.value) {
+        return alert('Fill all required fields '+ eequip_name.value + " "+ eequip_quantity.value);
+    }
+
+    const id = itemId;
+
+    // Fetch current data
+    const res = await fetch('http://localhost:5000/equipments', { credentials: 'include' });
+    const eqData = await res.json();
+    const efo = eqData.equips.find(i => i.id == id);
+
+    // ❗ DUPLICATE CHECK (name + dosage)
+    const duplicate = eqData.equips.find(e =>
+        e.id != id &&
+        e.name.toLowerCase() === eequip_name.value.toLowerCase()
+    );
+
+    if (duplicate) {
+        return alert(`Cannot save. Equipment "${eequip_name.value}" already exists.`);
+    }
+
+    let actChanges = [];
+
+    if (efo.name !== eequip_name.value) {
+        actChanges.push(`Name changed from "${efo.name}" to "${eequip_name.value}"`);
+    }
+
+    if (efo.description !== eequip_description.value) {
+        actChanges.push(`Description updated`);
+    }
+
+    const newQty = Number(eequip_quantity.value);
+    if (efo.quantity !== newQty) {
+        actChanges.push(`Quantity changed from ${efo.quantity} to ${newQty}`);
+    }
+
+    const file = document.getElementById('eimageEquip').files[0];
+    const oldImage = document.getElementById('existingImage').value;
+
+    if (file) {
+        actChanges.push(`Image updated`);
+    } 
+    else if (window.removeImageClicked === true) {
+        actChanges.push(`Image removed`);
+    } 
+    else if (!oldImage && file) {
+        actChanges.push(`Image added`);
+    }
+
+    // no change then stop and hide the edit medicines
+    if (actChanges.length === 0) {
+        document.getElementById('editEquipForm').classList.add('hidden');
+        return alert("No changes detected.");
+    }
+
+    // Build final activity log text
+    const act = `${efo.name}  — ` + actChanges.join(", ");
+
+    // Prepare FormData for PUT
+    const formData = new FormData();
+    formData.append("name", eequip_name.value);
+    formData.append("description", eequip_description.value);
+    formData.append("quantity", eequip_quantity.value);
+
+    if (file) {
+        formData.append("image", file);
+    } else {
+        formData.append("existingImage", oldImage);
+    }
+
+    if (window.removeImageClicked === true) {
+        formData.append("removeImage", "true");
+    }
+
+    // Save activity log
+    await fetch('http://localhost:5000/activity-log', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "editE", activity: act }),
+        credentials: "include"
+    });
+
+    // Update medicine
+    const response = await fetch(`http://localhost:5000/equipments/${id}`, {
+        method: "PUT",
+        body: formData
+    });
+
+    const data = await response.json();
+    if (data.success) location.reload();
+});
+
+document.getElementById('edropImageEquip').addEventListener('dragover',(e)=>{
+    e.preventDefault();
+    
+    document.getElementById('edropImageEquip').classList.remove('bg-[#f9fbffff]')
+    document.getElementById('edropImageEquip').classList.add('bg-[#f0f5ffff]')
+    document.getElementById('edropImageEquip').style.borderColor = " rgba(153, 177, 255, 1)";
+})
+
+document.getElementById('edropImageEquip').addEventListener('dragleave',(e)=>{
+    e.preventDefault();
+    
+    document.getElementById('edropImageEquip').classList.remove('bg-[#f0f5ffff]')
+    document.getElementById('edropImageEquip').classList.add('bg-[#f9fbffff]')
+    document.getElementById('edropImageEquip').style.borderColor = " #c7c7c7ff"
+})
+
+document.getElementById('edropImageEquip').addEventListener('click',()=>{
+    window.removeImageClicked = false;
+    eimageEquip.click();
+})
+
+document.getElementById('eimageEquip').addEventListener('change',(e)=>{
+    e.preventDefault();
+
+    const file = e.target.files[0];
+    window.removeImageClicked = false;
+    renderImg(file, "equipmentEdit");
+});
 
 
+document.getElementById('edropImageEquip').addEventListener('drop',(e)=>{
+    e.preventDefault();
+
+    const img = e.dataTransfer.files[0];
+
+    if (img && img.type.startsWith('image/')) {
+
+        // FIX: Put the dropped file into #eimage input
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(img);
+        document.getElementById('eimageEquip').files = dataTransfer.files;
+
+        window.removeImageClicked = false;
+        renderImg(img, "equipmentEdit");
+
+    } else {
+      alert('Please drop an image file.');
+    }
+});
+
+async function renderListEquip(){
+    // alert('kkkk')
+    const res = await fetch('http://localhost:5000/equipments', {credentials: 'include'});
+    const eqData = await res.json();
+
+    console.log(eqData)
+
+    if(eqData.ok == false) return alert("error fetch!")
+    console.log("Equipments: "+eqData.equips.length == 0)
+    document.getElementById('equipList').innerHTML = ``;
+
+    if(eqData.equips.length == 0){
+        document.getElementById('equipList').innerHTML += `
+            <div class="h-full w-full flex justify-center">
+                <div class="text-2xl font-[800] text-stone-400">No added equipment list yet!</div>
+            </div>
+        `;
+    }
+    eqData.equips.forEach((equip,i) =>{
+        document.getElementById('equipList').innerHTML += `
+            <div class="h-[350px] w-[350px] shadow-lg rounded-xl border border-stone-100 relative overflow-hidden">
+                <div>
+                    <div class="h-[125px] w-[calc(100%-30px)] m-[15px] mb-0 bg-blue-100 overflow-hidden rounded-xl shadow-sm">
+                        ${
+                            equip.image 
+                            ? `<img src="http://localhost:5000/uploads/${equip.image}" class="h-full w-full object-cover">`
+                            : `<div class="h-full w-full flex items-center justify-center text-gray-400 text-xl font-[800]">No Image</div>`
+                        }
+                    </div>
+                    <div class="px-[15px] h-[165px]">
+                        <p class="text-[20px] pt-1 font-semibold text-[#333]">${equip.name}</p>
+                        <p class="py-1 h-[50px] line-clamp-2 leading-tight text-[#444] whitespace-normal break-words">${equip.description}</p>
+                        <div class="w-full flex flex-row justify-between">
+                            <div class="w-[50%]">
+                                <p>Quantity</p>
+                                <p>${equip.quantity}</p>
+                            </div>
+                        <div>
+                    </div>
+                    <div class="w-full p-[15px] absolute bottom-0 left-0 flex flex-row justify-between border-t border-stone-200 text-white font-semibold text-sm">
+                        <button class="w-[30%] bg-blue-500 py-2 rounded-xl hover:-translate-y-1 hover:bg-blue-400 shadow-sm" 
+                            onclick="editEquipmentForm(event,${equip.id},'${equip.name}','${equip.description}','${equip.quantity}','${equip.image}')">Edit</button>
+                        <button class="w-[30%] bg-green-500 py-2 rounded-xl hover:-translate-y-1 hover:bg-green-400 shadow-sm">Dispense</button>
+                        <button class="w-[30%] bg-red-500 py-2 rounded-xl hover:-translate-y-1 hover:bg-red-400 shadow-sm" 
+                            onclick="document.querySelectorAll('[id^=medDelBtn]').forEach(el => el.classList.add('hidden'));event.stopPropagation(); document.getElementById('medDelBtn${equip.id}').classList.remove('hidden'); 
+                            itemId = 'medDelBtn${equip.id}'">Delete</button>
+                    </div>
+                </div>
+                <div id="medDelBtn${equip.id}" class="absolute bg-[rgba(249,249,249,0.84)] py-10 h-full w-full top-0 left-0 hidden transition-all duration-500"
+                    onclick="this.classList.add('hidden')">
+                    <div class="flex flex-col items-center gap-0 h-full">
+                        <svg class="size-[100px]" xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 24 24">
+                            <circle cx="12" cy="12" r="9" fill="rgba(255, 225, 176, 1)" stroke="orange" stroke-width="1.2"/>
+                            <path d="M12 7.627v5.5" stroke="orange" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"/>
+                            <path d="M12 16.373v-.5" stroke="orange" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.2"/>
+                        </svg>
+                        <p class="text-[24px] font-[700] text-center text-[#555] my-2">Delete This Item?</p>
+                        <p class="px-6 text-center text-[#666] font-[500]">This action cannot be undone. Are you sure you want to remove it from the list?</p>
+                        <div class="w-full flex justify-center gap-4 mt-5">
+                            <button class="w-[40%] flex flex-row justify-center items-center gap-2 py-2 border-2 border-stone-400 bg-stone-100 rounded-xl font-[600] text-[#555] hover:bg-stone-200 hover:-translate-y-1">
+                                <svg class="size-5" xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 16 16">
+                                    <path fill="currentColor" d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.749.749 0 0 1 1.275.326a.749.749 0 0 1-.215.734L9.06 8l3.22 3.22a.749.749 0 0 1-.326 1.275a.749.749 0 0 1-.734-.215L8 9.06l-3.22 3.22a.751.751 0 0 1-1.042-.018a.751.751 0 0 1-.018-1.042L6.94 8L3.72 4.78a.75.75 0 0 1 0-1.06Z"/>
+                                </svg>
+                                Cancel
+                            </button>
+                            <button onclick="confirmDelEquip(event,${equip.id})" class="w-[40%] flex flex-row justify-center items-center gap-2 py-2 rounded-xl font-[600] text-[#444] bg-red-500 text-white hover:bg-[rgba(224,0,0,1)] hover:-translate-y-1">
+                                <svg class="size-4" width="200" height="200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                    <path fill="currentColor" d="M136.7 5.9C141.1-7.2 153.3-16 167.1-16H281c13.8 0 26 8.8 30.4 21.9L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64s14.3-32 32-32h96zM32 144h384v304c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64zm88 64c-13.3 0-24 10.7-24 24v192c0 13.3 10.7 24 24 24s24-10.7 24-24V232c0-13.3-10.7-24-24-24m104 0c-13.3 0-24 10.7-24 24v192c0 13.3 10.7 24 24 24s24-10.7 24-24V232c0-13.3-10.7-24-24-24m104 0c-13.3 0-24 10.7-24 24v192c0 13.3 10.7 24 24 24s24-10.7 24-24V232c0-13.3-10.7-24-24-24"/>
+                                </svg>
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        `;
+
+    });
+}
+
+renderListEquip()

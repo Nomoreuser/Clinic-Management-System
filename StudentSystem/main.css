@@ -112,7 +112,7 @@ main h3{
     color:white;
 }
 
-#medItems{
+.itemContainer{
     display: flex;
     box-sizing: border-box;
     /* justify-content: space-evenly; */

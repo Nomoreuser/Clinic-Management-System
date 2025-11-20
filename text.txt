@@ -29,6 +29,15 @@ CREATE TABLE Medicines (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 );
 
+CREATE TABLE Equipments (
+	id SERIAL PRIMARY KEY,
+  	name VARCHAR(255) NOT NULL,
+  	description TEXT NOT NULL,
+  	quantity INT DEFAULT 0,
+  	image VARCHAR(255),
+  	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)
+
 CREATE TABLE Records(
 	id SERIAL,
 	studentId VARCHAR(99),
