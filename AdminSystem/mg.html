@@ -11,7 +11,7 @@
         --color-clifford: #da373d;
       } */
       .vcbvcb{
-        background-color: rgb(222, 13, 13);
+        background-color: rgba(226, 226, 226, 0.477);
       }
 
       @keyframes modernSlideUp {
@@ -313,7 +313,7 @@
         </div>
 
         <div id="medList" class="h-[94%] overflow-y-scroll px-15 flex flex-wrap gap-10 py-5 pb-10">
-          <!-- Items Medicine here -->
+          <!-- Items Medicine here-->
         </div>
 
 
@@ -451,6 +451,70 @@
 
         </div>
 
+        <div id="medDispense" class="hidden h-full w-full bg-[rgba(226,226,226,0.477)] absolute top-0 left-0">
+          <div id="medDispenseBox" class="p-7 px-8 bg-white w-[450px] absolute top-[50%] left-[50%] -translate-y-1/2 -translate-x-1/2 rounded-xl shadow-xl">
+            <p class="text-center font-[700] text-[20px] text-green-400">Dispense Medicine</p>
+            <p class="text-center py-2 font-[600] text-stone-500">Fill out the form below to dispense medication</p>
+            <hr class="text-stone-200">
+
+            <input id="dispenseId" type="text" hidden/>
+
+            <p class="pt-4 text-[16px] text-stone-700 font-[600]">Medicine Name</p>
+            <div class="bg-stone-100 rounded-lg p-2 border border-stone-300 mt-2 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="size-5 w-[40px]" width="200" height="200" viewBox="0 0 24 24">
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20.193 12.999a6 6 0 1 1-10.392 6m10.392-6a6 6 0 0 0-10.392 6m10.392-6l-10.392 6m.242-13.457l5.085-3.005c1.872-1.106 4.266-.45 5.347 1.467A4.08 4.08 0 0 1 20 8.682m-9.957-3.14L4.958 8.547c-1.872 1.106-2.514 3.556-1.433 5.472A3.9 3.9 0 0 0 6.5 16m3.543-10.458L11.5 8" color="currentColor"/>
+              </svg>
+              <input id="dispenseName" type="text" class="" value="Paracetamol" disabled/>
+            </div>
+
+            <div class="flex flex-row justify-between mt-4">
+              <div class="w-[47%]">
+                <p class="text-[16px] text-stone-700 font-[600]">Dosage</p>
+                <div class="bg-stone-100 rounded-lg p-2 border border-stone-300 mt-2 flex items-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="size-5 w-[40px]" width="200" height="200" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M17 5v2a3 3 0 0 1 3 3v11a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V10a3 3 0 0 1 3-3V5h10Zm-4 6h-2v2H9v2h1.999L11 17h2l-.001-2H15v-2h-2v-2Zm6-9v2H5V2h14Z"/>
+                  </svg>
+                  <input id="dispenseDosage" class="w-[100px]" type="text" value="10 mg" disabled/>
+                </div>
+              </div>
+          
+              <div class="w-[47%]">
+                <p class="text-[16px] text-stone-700 font-[600]">Stocks</p>
+                <div class="bg-stone-100 rounded-lg p-2 border border-stone-300 mt-2 flex items-center">
+                  <svg width="200" height="200" class="size-5 w-[40px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path fill="currentColor" d="M224 0v64c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V0h32c35.3 0 64 28.7 64 64v128c0 5.5-.7 10.9-2 16H130c-1.3-5.1-2-10.5-2-16V64c0-35.3 28.7-64 64-64zm96 512c-11.2 0-21.8-2.9-31-8c9.5-16.5 15-35.6 15-56V320c0-20.4-5.5-39.5-15-56c9.2-5.1 19.7-8 31-8h32v64c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-64h32c35.3 0 64 28.7 64 64v128c0 35.3-28.7 64-64 64zM0 320c0-35.3 28.7-64 64-64h32v64c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-64h32c35.3 0 64 28.7 64 64v128c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64z"/>
+                  </svg>
+                  <input id="dispenseStock" type="text" value="10" class="w-[100px]" disabled/>
+                </div>
+              </div>
+            </div>
+
+            <p class="pt-4 text-[16px] text-stone-700 font-[600]">Student ID</p>
+            <div id="studD" class="bg-stone-100 rounded-lg p-2 border border-stone-300 mt-2 flex items-center gap-2">
+              <svg width="200" height="200" class="size-5 w-[40px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                <path fill="currentColor" d="M0 96c0-35.3 28.7-64 64-64h448c35.3 0 64 28.7 64 64zm0 48h576v272c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64zm247.3 272c20.2 0 35.3-19.4 22.4-35c-14.7-17.7-36.9-29-61.7-29h-64c-24.8 0-47 11.3-61.7 29c-12.9 15.6 2.2 35 22.4 35h142.5zM176 312a56 56 0 1 0 0-112a56 56 0 1 0 0 112m184-104c-13.3 0-24 10.7-24 24s10.7 24 24 24h112c13.3 0 24-10.7 24-24s-10.7-24-24-24zm0 96c-13.3 0-24 10.7-24 24s10.7 24 24 24h112c13.3 0 24-10.7 24-24s-10.7-24-24-24z"/>
+              </svg>
+              <input id="dispenseStudent" type="text" placeholder="example.. 23-0324-276" class="outline-none" maxlength="11"/>
+            </div>
+
+            <div class="ae mt-1"></div>
+
+            <p class="pt-4 text-[16px] text-stone-700 font-[600]">Quantity</p>
+            <div id="dq" class="bg-stone-100 rounded-lg p-2 border border-stone-300 mt-2 flex items-center gap-2">
+              <svg width="200" height="200" class="size-5 w-[40px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <path fill="currentColor" d="M224 0v64c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V0h32c35.3 0 64 28.7 64 64v128c0 5.5-.7 10.9-2 16H130c-1.3-5.1-2-10.5-2-16V64c0-35.3 28.7-64 64-64zm96 512c-11.2 0-21.8-2.9-31-8c9.5-16.5 15-35.6 15-56V320c0-20.4-5.5-39.5-15-56c9.2-5.1 19.7-8 31-8h32v64c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-64h32c35.3 0 64 28.7 64 64v128c0 35.3-28.7 64-64 64zM0 320c0-35.3 28.7-64 64-64h32v64c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-64h32c35.3 0 64 28.7 64 64v128c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64z"/>
+                </svg>
+              <input id="dispenseQuantity" type="number" placeholder="23-0324-276" class="outline-none w-[100%]" min="0" value="0"/>
+            </div>
+
+            <div class="ae mt-1"></div>
+
+            <div class="flex justify-between mt-5">
+              <button onclick="medDispense.classList.add('hidden')" class="w-[47%] bg-stone-100 py-2 rounded-xl hover:-translate-y-1 hover:shadow-lg border border-stone-200">Cancel</button>
+              <button onclick="dispenseMedConfirm(dispenseStudent.value)" class="w-[47%] bg-blue-100 py-2 rounded-xl hover:-translate-y-1 hover:shadow-lg border border-blue-200">Confirm</button>
+            </div>
+          </div>
+        </div>
       </section>
 
 
@@ -615,19 +679,138 @@
           </div>
 
         </div>
+
+        <div id="equipDispense" class="hidden h-full w-full bg-[rgba(226,226,226,0.477)] absolute top-0 left-0">
+          <div id="equipDispenseBox" class="p-7 px-8 bg-white w-[450px] absolute top-[50%] left-[50%] -translate-y-1/2 -translate-x-1/2 rounded-xl shadow-xl">
+            <p class="text-center font-[700] text-[20px] text-green-400">Dispense Equipment</p>
+            <p class="text-center py-2 font-[600] text-stone-500">Fill out the form below to dispense equipments</p>
+            <hr class="text-stone-200">
+
+            <input id="dispenseIde" type="text" hidden/>
+
+            <p class="pt-4 text-[16px] text-stone-700 font-[600]">Equipment Name</p>
+            <div class="bg-stone-100 rounded-lg p-2 border border-stone-300 mt-2 flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="size-5 w-[40px]" width="200" height="200" viewBox="0 0 24 24">
+                <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M20.193 12.999a6 6 0 1 1-10.392 6m10.392-6a6 6 0 0 0-10.392 6m10.392-6l-10.392 6m.242-13.457l5.085-3.005c1.872-1.106 4.266-.45 5.347 1.467A4.08 4.08 0 0 1 20 8.682m-9.957-3.14L4.958 8.547c-1.872 1.106-2.514 3.556-1.433 5.472A3.9 3.9 0 0 0 6.5 16m3.543-10.458L11.5 8" color="currentColor"/>
+              </svg>
+              <input id="dispenseNamee" type="text" class="" value="Paracetamol" disabled/>
+            </div>
+
+            <div class="flex flex-row justify-between mt-4">
+              <div class="w-[47%]">
+                <p class="text-[16px] text-stone-700 font-[600]">Stocks</p>
+                <div class="bg-stone-100 rounded-lg p-2 border border-stone-300 mt-2 flex items-center">
+                  <svg width="200" height="200" class="size-5 w-[40px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path fill="currentColor" d="M224 0v64c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V0h32c35.3 0 64 28.7 64 64v128c0 5.5-.7 10.9-2 16H130c-1.3-5.1-2-10.5-2-16V64c0-35.3 28.7-64 64-64zm96 512c-11.2 0-21.8-2.9-31-8c9.5-16.5 15-35.6 15-56V320c0-20.4-5.5-39.5-15-56c9.2-5.1 19.7-8 31-8h32v64c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-64h32c35.3 0 64 28.7 64 64v128c0 35.3-28.7 64-64 64zM0 320c0-35.3 28.7-64 64-64h32v64c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-64h32c35.3 0 64 28.7 64 64v128c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64z"/>
+                  </svg>
+                  <input id="dispenseStocke" type="text" value="10" class="w-[100px]" disabled/>
+                </div>
+              </div>
+            </div>
+
+            <p class="pt-4 text-[16px] text-stone-700 font-[600]">Student ID</p>
+            <div id="studDe" class="bg-stone-100 rounded-lg p-2 border border-stone-300 mt-2 flex items-center gap-2">
+              <svg width="200" height="200" class="size-5 w-[40px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                <path fill="currentColor" d="M0 96c0-35.3 28.7-64 64-64h448c35.3 0 64 28.7 64 64zm0 48h576v272c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64zm247.3 272c20.2 0 35.3-19.4 22.4-35c-14.7-17.7-36.9-29-61.7-29h-64c-24.8 0-47 11.3-61.7 29c-12.9 15.6 2.2 35 22.4 35h142.5zM176 312a56 56 0 1 0 0-112a56 56 0 1 0 0 112m184-104c-13.3 0-24 10.7-24 24s10.7 24 24 24h112c13.3 0 24-10.7 24-24s-10.7-24-24-24zm0 96c-13.3 0-24 10.7-24 24s10.7 24 24 24h112c13.3 0 24-10.7 24-24s-10.7-24-24-24z"/>
+              </svg>
+              <input id="dispenseStudente" type="text" placeholder="example.. 23-0324-276" class="outline-none" maxlength="11"/>
+            </div>
+
+            <div class="aee mt-1"></div>
+
+            <p class="pt-4 text-[16px] text-stone-700 font-[600]">Quantity</p>
+            <div id="dqe" class="bg-stone-100 rounded-lg p-2 border border-stone-300 mt-2 flex items-center gap-2">
+              <svg width="200" height="200" class="size-5 w-[40px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                  <path fill="currentColor" d="M224 0v64c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16V0h32c35.3 0 64 28.7 64 64v128c0 5.5-.7 10.9-2 16H130c-1.3-5.1-2-10.5-2-16V64c0-35.3 28.7-64 64-64zm96 512c-11.2 0-21.8-2.9-31-8c9.5-16.5 15-35.6 15-56V320c0-20.4-5.5-39.5-15-56c9.2-5.1 19.7-8 31-8h32v64c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-64h32c35.3 0 64 28.7 64 64v128c0 35.3-28.7 64-64 64zM0 320c0-35.3 28.7-64 64-64h32v64c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-64h32c35.3 0 64 28.7 64 64v128c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64z"/>
+                </svg>
+              <input id="dispenseQuantitye" type="number" placeholder="23-0324-276" class="outline-none w-[100%]" min="0" value="0"/>
+            </div>
+
+            <div class="aee mt-1"></div>
+
+            <div class="flex justify-between mt-5">
+              <button onclick="equipDispense.classList.add('hidden')" class="w-[47%] bg-stone-100 py-2 rounded-xl hover:-translate-y-1 hover:shadow-lg border border-stone-200">Cancel</button>
+              <button onclick="dispenseEquipConfirm(dispenseStudente.value)" class="w-[47%] bg-blue-100 py-2 rounded-xl hover:-translate-y-1 hover:shadow-lg border border-blue-200">Confirm</button>
+            </div>
+          </div>
+        </div>
       </section>
 
+
+      <!-- Record  -->
       <section id="sec4" class="h-[100%]">
-        <h1 class="text-4xl font-semibold font-sans ">Record</h1>
+        <div class="flex items-center justify-between h-[6%] px-7">
+          <h1 class="text-4xl font-semibold font-sans ">Record</h1>
+          <div class="flex flex-row items-center justify-center gap-5">
+            <div class="border rounded-full text-purple-600 relative">
+              <input id="searchRecord" type="text" placeholder="Search" class="p-1 pl-4 pr-10 outline-none w-85">
+              <svg onclick="record()" id='Search_24' class="absolute right-3 top-1" width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='24' height='24' stroke='currentColor' fill='#000000' opacity='0'/>
+                <g transform="matrix(2 0 0 2 12 12)" >
+<g>
+<g transform="matrix(1 0 0 1 -0.88 -0.88)" >
+<path style="stroke: currentColor; stroke-width: 0.75; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-4.25, -4.25)" d="M 0.5 4.25 C 0.5 6.3210678118654755 2.1789321881345245 8 4.25 8 C 6.3210678118654755 8 8 6.3210678118654755 8 4.25 C 8 2.1789321881345245 6.3210678118654755 0.5 4.25 0.5 C 2.1789321881345245 0.5 0.5 2.178932188134524 0.5 4.249999999999999 Z" stroke-linecap="round" />
+</g>
+<g transform="matrix(1 0 0 1 3.08 3.08)" >
+<path style="stroke: currentColor; stroke-width: 0.75; stroke-dasharray: none; stroke-linecap: round; stroke-dashoffset: 0; stroke-linejoin: round; stroke-miterlimit: 4; fill: none; fill-rule: nonzero; opacity: 1;" transform=" translate(-8.2, -8.2)" d="M 9.5 9.5 L 6.902 6.902" stroke-linecap="round" />
+</g>
+</g>
+                </g>
+              </svg>
+            </div>
+            <div class="relative">
+              <button id="filterRec" class="flex items-center gap-7 p-1 px-4 rounded-full text-[rgb(0,82,150)] text-semibold bg-[rgba(91,181,255,0.3)]">
+                sort by 
+                <svg id="filRecArrow" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-3">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                </svg>
+              </button>
+
+              <div id="dropRec" class="hidden absolute top-[40px] right-0 z-2 bg-white shadow-xl rounded-xl overflow-hidden border border-stone-100">
+                <div class="hover:bg-blue-100 p-2 rlg" onclick="record('all')">All</div>
+                <div class="hover:bg-blue-100 p-2 rlg" onclick="record('get')">Get</div>
+                <div class="hover:bg-blue-100 p-2 rlg" onclick="record('borrowed')">Borrowed</div>
+                <div class="hover:bg-blue-100 p-2 rlg" onclick="record('returned')">Returned</div>
+                <div class="hover:bg-blue-100 p-2 whitespace-nowrap rlg" onclick="record('itemNotReturned')">Total still not returned</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="rlc" class="h-[94%] overflow-y-scroll px-7 pb-20">
+          <table class="w-full">
+            <colgroup>
+              <col class="w-[15%]" />
+              <col class="w-[30%]" />
+              <col class="w-[20%]" />
+              <col class="w-[10%]" />
+              <col class="w-[20%]" />
+              <col class="w-[5%]" />
+            </colgroup>
+            <thead class="bg-white sticky top-0">
+              <tr class="text-left">
+                <th class="pb-2 pt-5 border-b-2 border-stone-300 pl-5">Type</th> 
+                <th class="pb-2 pt-5 border-b-2 border-stone-300 ">Item name</th> 
+                <th class="pb-2 pt-5 border-b-2 border-stone-300 ">Student ID</th> 
+                <th class="pb-2 pt-5 border-b-2 border-stone-300 ">Quantity</th> 
+                <th class="pb-2 pt-5 border-b-2 border-stone-300 ">Date and Time</th>
+                <th class="pb-2 pt-5 border-b-2 border-stone-300 "></th>
+              </tr>
+            </thead>
+            <tbody id="recordList">
+                
+            </tbody>
+          </table>
+        </div>
       </section>
 
+      <!-- Activity-Log -->
       <section id="sec5" class="h-[100%]">
         <div class="flex items-center justify-between h-[6%] px-7">
           <h1 class="text-4xl font-semibold font-sans ">Activity Log</h1>
           <div class="flex flex-row items-center justify-center gap-5">
             <div class="border rounded-full text-purple-600 relative">
-              <input type="text" placeholder="Search" class="p-1 pl-4 pr-10 outline-none w-85">
-              <svg onclick="alert('hoohohohooo')" id='Search_24' class="absolute right-3 top-1" width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='24' height='24' stroke='currentColor' fill='#000000' opacity='0'/>
+              <input id="searchLog" type="text" placeholder="Search" class="p-1 pl-4 pr-10 outline-none w-85">
+              <svg onclick="activity()" id='Search_24' class="absolute right-3 top-1" width='24' height='24' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'><rect width='24' height='24' stroke='currentColor' fill='#000000' opacity='0'/>
                 <g transform="matrix(2 0 0 2 12 12)" >
 <g>
 <g transform="matrix(1 0 0 1 -0.88 -0.88)" >
@@ -648,12 +831,18 @@
                 </svg>
               </button>
 
-              <div id="dropLog" class="hidden absolute top-[40px] right-0 z-2 bg-white shadow-xl rounded-xl overflow-hidden border border-stone-100">
+              <div id="dropLog" class="hidden absolute top-[40px] right-0 z-2 bg-white shadow-xl rounded-xl overflow-hidden border-2 border-stone-100">
                 <div class="hover:bg-blue-100 p-2 slg" onclick="activity('all')">All</div>
                 <div class="hover:bg-blue-100 p-2 slg" onclick="activity('login')">Log in</div>
                 <div class="hover:bg-blue-100 p-2 slg" onclick="activity('logout')">Log out</div>
+                <div class="hover:bg-blue-100 p-2 slg" onclick="activity('addM')">Added Medicine</div>
                 <div class="hover:bg-blue-100 p-2 slg" onclick="activity('editM')">Edited Medicine</div>
                 <div class="hover:bg-blue-100 p-2 whitespace-nowrap slg" onclick="activity('deleteM')">Deleted Medicine</div>
+                <div class="hover:bg-blue-100 p-2 slg" onclick="activity('addE')">Added Equipment</div>
+                <div class="hover:bg-blue-100 p-2 slg" onclick="activity('editE')">Edited Equipment</div>
+                <div class="hover:bg-blue-100 p-2 whitespace-nowrap slg" onclick="activity('deleteE')">Deleted Equipment</div>
+                <div class="hover:bg-blue-100 p-2 slg" onclick="activity('dispenseM')">Dispense Medicine</div>
+                <div class="hover:bg-blue-100 p-2 whitespace-nowrap slg" onclick="activity('dispenseE')">Dispense Equipment</div>
               </div>
             </div>
           </div>

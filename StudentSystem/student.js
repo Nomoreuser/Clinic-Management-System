@@ -55,7 +55,7 @@ async function check(id) {
         </div>
         <div class="infoItem">
           <div class="infos">Course/Strand: </div>
-          <div class="data">${data.course} - ${data.yearLevel}</div>
+          <div class="data">${data.courseOrStrand} - ${data.yearLevel}</div>
         </div>
 
         <div style="display: flex;justify-content: flex-end; gap: 15px">

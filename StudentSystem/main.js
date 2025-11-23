@@ -136,8 +136,11 @@ function holdStop(){
 }
 
 async function confirm(item, i, medId, type){
+
     let id = "itemQ"+i;
     let qty = document.getElementById(id).textContent;
+
+    if(qty == "0") return alert("! Quantity")
     alert(sid+" "+type+" "+item + " "+qty)
 
     const res = await fetch("http://localhost:5000/records", {
@@ -162,136 +165,262 @@ async function confirm(item, i, medId, type){
 
 
 
-// ///////////////////////////////////////////////////////////////////
-// // EQUIPMENT SECTION
-// Equipment()
+///////////////////////////////////////////////////////////////////
+// EQUIPMENT SECTION
+Equipment()
+let eqCounts = [];
 
-// // Separate counter for equipment to avoid conflict with medicine counters
-// let eqCounts = [];
+async function Equipment(){
 
-// async function Equipment(){
+    const res = await fetch('http://localhost:5000/equipments', {credentials: 'include'});
+    const eqData = await res.json();
 
-//     const res = await fetch('http://localhost:5000/equipments', {credentials: 'include'});
-//     const eqData = await res.json();
+    console.log(eqData)
 
-//     console.log(eqData)
+    if(eqData.ok == false) return alert("error fetch!")
+    console.log(eqData.equips.length == 0)
 
-//     if(eqData.ok == false) return alert("error fetch!")
-//     console.log(eqData.equips.length == 0)
+    const equipItems = document.getElementById("equipItems");
 
-//     const equipItems = document.getElementById("equipItems");
+    equipItems.innerHTML = ""
 
-//     eqData.equips.forEach((items,i) =>{
+    eqData.equips.forEach((items,i) =>{
 
-//         // Initialize equipment counter
-//         eqCounts[i] = 0;
+        // Initialize equipment counter
+        eqCounts[i] = 0;
 
-//         equipItems.innerHTML += `
-//             <div style="width: 350px;height: 360px;background: rgba(255, 255, 255, 0.95); border-radius: 16px;border: 1px solid rgba(255,255,255,0.8);box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); overflow:hidden; display: flex; flex-direction: column;">
-//                 <div style="background-color:white;width:100%;height:100px;flex-shrink:0;">
-//                     <img src="http://localhost:5000/uploads/${items.image}" alt="" onerror="this.src='https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg';"
-//                         style="width:100%; height:100%; object-fit:cover;" />
-//                 </div>
-//                 <div style="padding: 12px 15px; flex: 1; display: flex; flex-direction: column;">
+        equipItems.innerHTML += `
+            <div style="width: 350px;height: 340px;background: rgba(255, 255, 255, 0.95); border-radius: 16px;border: 1px solid rgba(255,255,255,0.8);box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); overflow:hidden; display: flex; flex-direction: column;">
+                <div style="background-color:white;width:100%;height:100px;flex-shrink:0;">
+                    <img src="http://localhost:5000/uploads/${items.image}" alt="" onerror="this.src='https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg';"
+                        style="width:100%; height:100%; object-fit:cover;" />
+                </div>
+                <div style="padding: 12px 15px; flex: 1; display: flex; flex-direction: column;">
 
-//                     <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px; color: #1a1a1a;">${items.name}</div>
+                    <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px; color: #1a1a1a;">${items.name}</div>
 
-//                     <div style="padding: 0; word-break: break-word; margin: 0 0 12px 0; color: #666; line-height: 1.4; height: 40px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
-//                         ${items.description}
-//                     </div>
+                    <div style="padding: 0; word-break: break-word; margin: 0 0 12px 0; color: #666; line-height: 1.4; height: 40px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+                        ${items.description}
+                    </div>
 
-//                     <div style="display:flex;justify-content:space-between;padding: 4px 0 12px 0; font-size: 14px;">
-//                         <div style="color: #666;">Stocks:</div>
-//                         <div style="font-weight: 500;">${items.quantity}</div>
-//                     </div>
+                    <div style="display:flex;justify-content:space-between;padding: 4px 0 12px 0; font-size: 14px;">
+                        <div style="color: #666;">Stocks:</div>
+                        <div style="font-weight: 500;">${items.quantity}</div>
+                    </div>
 
-//                     <div style="display:flex; justify-content:center; align-items:center; gap:12px; height:36px; background-color: rgba(240, 240, 240, 0.6); margin: 0 0 12px 0; padding:6px; border-radius:10px;">
-//                         <button style="font-size:20px; width:28px;height:28px;border-radius:50%;border:none;background:white;cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" 
-//                             onmousedown="eqHoldStart(${i},${items.quantity},'-')" onmouseup="eqHoldStop()" onmouseleave="eqHoldStop()">-
-//                         </button>
+                    <div style="display:flex; justify-content:center; align-items:center; gap:12px; height:36px; background-color: rgba(240, 240, 240, 0.6); margin: 0 0 12px 0; padding:6px; border-radius:10px;">
+                        <button style="font-size:20px; width:28px;height:28px;border-radius:50%;border:none;background:white;cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" 
+                            onmousedown="eqHoldStart(${i},${items.quantity},'-')" onmouseup="eqHoldStop()" onmouseleave="eqHoldStop()">-
+                        </button>
 
-//                         <div style="height: 28px;width: 50px;background-color: white;border-radius:6px; display:flex; align-items:center; justify-content:center; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-//                             <div id="eqItemQ${i}" style="margin:0;padding:0; font-weight:600;">0</div>
-//                         </div>
+                        <div style="height: 28px;width: 50px;background-color: white;border-radius:6px; display:flex; align-items:center; justify-content:center; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+                            <div id="eqItemQ${i}" style="margin:0;padding:0; font-weight:600;">0</div>
+                        </div>
 
-//                         <button style="font-size:20px; width:28px;height:28px;border-radius:50%;border:none;background:white;cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" 
-//                             onmousedown="eqHoldStart(${i},${items.quantity},'+')" onmouseup="eqHoldStop()" onmouseleave="eqHoldStop()">+
-//                         </button>
-//                     </div>
+                        <button style="font-size:20px; width:28px;height:28px;border-radius:50%;border:none;background:white;cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow: 0 2px 4px rgba(0,0,0,0.1);" 
+                            onmousedown="eqHoldStart(${i},${items.quantity},'+')" onmouseup="eqHoldStop()" onmouseleave="eqHoldStop()">+
+                        </button>
+                    </div>
 
-//                     <button onclick="eqConfirm('${items.name}', '${i}', ${items.id})" 
-//                         style="width: 100%;padding:10px;border:none;border-radius:8px;background:linear-gradient(135deg, #2b95ff 0%, #1a7de0 100%);color:white;cursor:pointer;font-weight:600; box-shadow: 0 4px 12px rgba(43, 149, 255, 0.3);">
-//                         Confirm
-//                     </button>
-//                 </div>
-//             </div>
-//         `;
-//     });
-// }
+                    <button onclick="eqConfirm('${items.name}', '${i}', ${items.id}, 'borrowed')" 
+                        style="width: 100%;padding:10px;border:none;border-radius:8px;background:linear-gradient(135deg, #2b95ff 0%, #1a7de0 100%);color:white;cursor:pointer;font-weight:600; box-shadow: 0 4px 12px rgba(43, 149, 255, 0.3);">
+                        Confirm
+                    </button>
+                </div>
+            </div>
+        `;
+    });
+}
+
+let eqHold;
+
+function eqCount(i, available, status){
+    if(eqCounts[i] === undefined) eqCounts[i] = 0;
+
+    if(status == '+'){
+        if(eqCounts[i] < available){
+            eqCounts[i]++;
+        } else {
+            clearInterval(eqHold);
+        }
+    } else {
+        if(eqCounts[i] > 0){
+            eqCounts[i]--;
+        } else {
+            clearInterval(eqHold);
+        }
+    }
+
+    document.getElementById("eqItemQ"+i).textContent = eqCounts[i];
+}
+
+function eqHoldStart(i, available, status){
+    eqCount(i, available, status);
+    eqHold = setInterval(()=> eqCount(i, available, status), 200);
+}
+
+function eqHoldStop(){
+    clearInterval(eqHold);
+}
+
+async function eqConfirm(itemName, i, equipId, type){
+
+    let qty = eqCounts[i];
+
+    if(qty == 0) return alert("Please select quantity.");
+
+    const res = await fetch("http://localhost:5000/records", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ 
+            studentId: sid, 
+            type: type, 
+            itemName: itemName, 
+            qty: qty,
+            itemId: equipId
+        })
+    })
+
+    const result = await res.json();
+    alert(result.message);
+
+    // Reset UI
+    eqCounts[i] = 0;
+    document.getElementById("eqItemQ"+i).textContent = 0;
+    Equipment()
+    borrowedEquip()
+}
 
 
-// // ======================
-// // COUNTER LOGIC (equipment)
-// // ======================
+/////////////////////////////////////////////////////////////////
+async function borrowedEquip() {
+    const res = await fetch(`http://localhost:5000/borrowed-items/${sid}`);
+    const data = await res.json();
 
-// let eqHold;
+    console.log(data)
+    console.log(data.borrowedItems.length == 0)
 
-// function eqCount(i, available, status){
-//     if(eqCounts[i] === undefined) eqCounts[i] = 0;
+    document.getElementById('bdItems').innerHTML = ""
 
-//     if(status == '+'){
-//         if(eqCounts[i] < available){
-//             eqCounts[i]++;
-//         } else {
-//             clearInterval(eqHold);
-//         }
-//     } else {
-//         if(eqCounts[i] > 0){
-//             eqCounts[i]--;
-//         } else {
-//             clearInterval(eqHold);
-//         }
-//     }
+    if (data.borrowedItems.length == 0) {
+        document.getElementById('bdItems').innerHTML = `
+            <div style="width: 100%; text-align: center; font-weight: 700; font-size: 20px">
+                No borrowed equipment yet.
+            </div>
+        `;
+    } else {
+        data.borrowedItems.forEach((item, i) => {
+            document.getElementById('bdItems').innerHTML += `
+                <div style="background-color: white; height: fit-content; padding: 15px; width: 250px; border-radius: 15px; border: 1px solid rgba(147, 147, 147, 1); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); font-family: 'Segoe UI', system-ui, sans-serif;">
+                    
+                    <div style="font-size: 18px; font-weight: 600; color: #2d3748; margin-bottom: 8px;">
+                        ${item.itemname}
+                    </div>
 
-//     document.getElementById("eqItemQ"+i).textContent = eqCounts[i];
-// }
+                    <div style="font-size: 14px; color: #718096; margin-bottom: 15px;">
+                        Total borrowed: ${item.total}
+                    </div>
 
-// function eqHoldStart(i, available, status){
-//     eqCount(i, available, status);
-//     eqHold = setInterval(()=> eqCount(i, available, status), 200);
-// }
+                    <div style="display: flex; justify-content: space-between; align-items: center; font-size: 20px; margin-bottom: 15px; background: #f7fafc; padding: 8px 12px; border-radius: 8px;">
 
-// function eqHoldStop(){
-//     clearInterval(eqHold);
-// }
+                        <!-- MINUS BUTTON -->
+                        <div 
+                            onmousedown="reHoldStart(${i}, ${item.total}, '-')" 
+                            onmouseup="reHoldStop()" 
+                            onmouseleave="reHoldStop()"
+                            style="width: 32px; height: 32px; border-radius: 6px; background: #edf2f7; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #475569; user-select: none;">
+                            -
+                        </div>
+
+                        <div id="reItemQ${i}" 
+                            style="font-weight: 600; color: #2d3748; min-width: 30px; text-align: center;">
+                            0
+                        </div>
+
+                        <!-- PLUS BUTTON -->
+                        <div 
+                            onmousedown="reHoldStart(${i}, ${item.total}, '+')" 
+                            onmouseup="reHoldStop()" 
+                            onmouseleave="reHoldStop()"
+                            style="width: 32px; height: 32px; border-radius: 6px; background: #edf2f7; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #475569; user-select: none;">
+                            +
+                        </div>
+
+                    </div>
+
+                    <div onclick="reConfirm('${item.itemname}', ${i}, 'returned', '0')" 
+                        style="background: #4361ee; color: white; text-align: center; padding: 10px; border-radius: 8px; font-weight: 500; cursor: pointer;">
+                        Return
+                    </div>
+                </div>
+            `;
+        });
+    }
+}
+
+borrowedEquip();
 
 
-// // ======================
-// // CONFIRM FOR EQUIPMENT
-// // ======================
+let reHold;
+let reCounts = [];
 
-// async function eqConfirm(itemName, i, equipId){
+function reCount(i, available, status) {
+    if (reCounts[i] === undefined) reCounts[i] = 0;
+    if (reCounts[i] === null) reCounts[i] = 0;
 
-//     let qty = eqCounts[i];
+    if (status == '+') {
+        if (reCounts[i] < available) {
+            reCounts[i]++;
+        } else {
+            clearInterval(reHold);
+        }
+    } else {
+        if (reCounts[i] > 0) {
+            reCounts[i]--;
+        } else {
+            clearInterval(reHold);
+        }
+    }
 
-//     if(qty == 0) return alert("Please select quantity.");
+    document.getElementById("reItemQ" + i).textContent = reCounts[i];
+}
 
-//     const res = await fetch("http://localhost:5000/records", {
-//         method: "POST",
-//         headers: {"Content-Type": "application/json"},
-//         body: JSON.stringify({ 
-//             studentId: sid, 
-//             type: type, 
-//             itemName: item, 
-//             qty: qty,
-//             itemId: equipId
-//         })
-//     })
+function reHoldStart(i, available, status) {
+    clearInterval(reHold); // prevent stacking intervals
+    reCount(i, available, status);
+    reHold = setInterval(() => reCount(i, available, status), 200);
+}
 
-//     const result = await res.json();
-//     alert(result.message);
+function reHoldStop() {
+    clearInterval(reHold);
+}
 
-//     // Reset UI
-//     eqCounts[i] = 0;
-//     document.getElementById("eqItemQ"+i).textContent = 0;
-// }
+
+async function reConfirm(itemName, i, type, itemId) {
+    let qty = reCounts[i] ?? 0;
+
+    if (qty <= 0) {
+        return alert("Please select quantity.");
+    }
+
+    const res = await fetch("http://localhost:5000/records", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ 
+            studentId: sid, 
+            type: type, 
+            itemName: itemName, 
+            qty: qty,
+            itemId: itemId
+        })
+    });
+
+    const result = await res.json();
+    alert(result.message);
+
+    // Reset UI
+    reCounts[i] = 0;
+    document.getElementById("reItemQ"+i).textContent = 0;
+    borrowedEquip();
+    Equipment();
+}

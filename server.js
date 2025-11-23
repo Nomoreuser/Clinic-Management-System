@@ -193,6 +193,7 @@ app.get('/user/account-info', async(req, res)=>{
     }
 });
 
+
 app.post('/activity-log', async (req, res) => {
     try {
         const { type, activity } = req.body;
@@ -298,7 +299,7 @@ app.delete("/medicines/:id", async (req, res) => {
     try {
         // 1. Get medicine image filename from DB
         const result = await pool.query(
-            "SELECT image FROM medicines WHERE id = $1",
+            "SELECT name, dosage, image FROM medicines WHERE id = $1",
             [id]
         );
 
@@ -306,10 +307,17 @@ app.delete("/medicines/:id", async (req, res) => {
             return res.status(404).json({ success: false, message: "Not found" });
         }
 
-        const imageFilename = result.rows[0].image;
+        const { name, dosage, image: imageFilename} = result.rows[0];
 
-        // 2. Delete DB row
+        const namedosage = `${name} ${dosage}`;
+
+        await pool.query("BEGIN");
+        
+        await pool.query("DELETE FROM Records WHERE itemname = $1", [namedosage]);
+
         await pool.query("DELETE FROM medicines WHERE id = $1", [id]);
+
+        await pool.query("COMMIT")
 
         // 3. Delete physical file from uploads
         if (imageFilename) {
@@ -323,6 +331,7 @@ app.delete("/medicines/:id", async (req, res) => {
         res.json({ success: true, message: "Deleted successfully" });
 
     } catch (err) {
+        await pool.query("ROLLBACK");
         console.error("DELETE ERROR:", err);
         res.status(500).json({ success: false, message: "Server error" });
     }
@@ -386,6 +395,8 @@ app.put("/medicines/:id", upload.single("image"), async (req, res) => {
     }
 });
 
+//Records for students side
+/////////////////////////////////////////
 app.post('/records', async(req, res)=>{
     const {studentId, type, itemName, qty, itemId} = req.body;
 
@@ -401,15 +412,168 @@ app.post('/records', async(req, res)=>{
             );
         }
 
+        if(type == "borrowed"){
+            await pool.query(
+                `UPDATE Equipments SET quantity = quantity - $1 WHERE id = $2 AND quantity >= $1`,
+                [qty, itemId]
+            );
+        }
+
+        if(type == "returned"){
+            await pool.query(
+                `UPDATE Equipments SET quantity = quantity + $1 WHERE name = $2`,
+                [qty, itemName]
+            );
+        }
+
         res.json({ok: true, message: "success"});
     }catch(error){
         console.log("Records: " + error);
         res.json({ok: false, message: "error"});
     }
 });
+// app.get('/records', async (req, res) => {
+//     const type = req.query.type;
+
+//     try {
+//         let query = `
+//             SELECT * FROM Records
+//         `;
+
+//         let params = [];
+
+//         if (type && type !== "all") {
+//             query += " WHERE type = $1 ORDER BY datecreated DESC";
+//             params.push(type);
+//         } else {
+//             query += " ORDER BY datecreated DESC";
+//         }
+
+//         const result = await pool.query(query, params);
+
+//         res.json({ ok: true, records: result.rows });
+
+//     } catch (error) {
+//         console.error(error.message);
+//         res.status(500).json({ ok: false, message: error.message });
+//     }
+// });
+
+
+
+
+// app.get('/borrowed-items/:sid', async (req, res) => {
+//     const sid = req.params.sid;
+
+//     try {
+//         const result = await pool.query(
+//             `SELECT itemname, SUM(qty) AS total
+//              FROM Records
+//              WHERE type = 'borrowed' AND studentid = $1
+//              GROUP BY itemname`,
+//             [sid]
+//         );
+
+//         res.json({ 
+//             studentId: sid,
+//             borrowedItems: result.rows
+//         });
+
+//     } catch (err) {
+//         res.status(500).json({ error: err.message });
+//     }
+// });
+
 
 // Equipments
 //////////////////////////////////////////////////////////////////////
+
+app.get('/records', async (req, res) => {
+    const type = req.query.type;
+
+    try {
+        let query = "";
+        let params = [];
+
+        if (type && !["itemNotReturned"].includes(type)) {
+
+            query = `
+                SELECT *
+                FROM Records
+            `;
+
+            if (type !== "all") {
+                query += " WHERE type = $1";
+                params.push(type);
+            }
+
+            query += " ORDER BY datecreated DESC";
+        }
+        else if (type === "itemNotReturned") {
+
+            query = `
+                SELECT 
+                    r.studentid,
+                    r.itemname,
+
+                    -- COMPUTE STILL NOT RETURNED
+                    (SUM(CASE WHEN r.type = 'borrowed' THEN r.qty ELSE 0 END) 
+                    - SUM(CASE WHEN r.type = 'returned' THEN r.qty ELSE 0 END)) AS qty,
+
+                    'not returned' AS type,
+
+                    MAX(r.datecreated) AS datecreated
+                FROM Records r
+                GROUP BY r.studentid, r.itemname
+                HAVING 
+                    (SUM(CASE WHEN r.type = 'borrowed' THEN r.qty ELSE 0 END)
+                    - SUM(CASE WHEN r.type = 'returned' THEN r.qty ELSE 0 END)) > 0
+                ORDER BY qty DESC;
+            `;
+        }
+
+
+        const result = await pool.query(query, params);
+
+        res.json({ ok: true, records: result.rows });
+
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({ ok: false, message: error.message });
+    }
+});
+
+
+app.get('/borrowed-items/:sid', async (req, res) => {
+    const sid = req.params.sid;
+
+    try {
+        const result = await pool.query(
+            `SELECT 
+                itemname,
+                SUM(CASE WHEN type = 'borrowed' THEN qty ELSE 0 END) -
+                SUM(CASE WHEN type = 'returned' THEN qty ELSE 0 END) AS total,
+                MAX(datecreated) AS last_borrowed
+             FROM Records
+             WHERE studentid = $1
+             GROUP BY itemname
+             HAVING SUM(CASE WHEN type = 'borrowed' THEN qty ELSE 0 END) -
+                    SUM(CASE WHEN type = 'returned' THEN qty ELSE 0 END) > 0
+             ORDER BY last_borrowed DESC`,
+            [sid]
+        );
+
+        res.json({
+            studentId: sid,
+            borrowedItems: result.rows
+        });
+
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+
 app.post('/equipments', upload.single('image'), async (req, res) => {
   const { name, description, quantity } = req.body;
   const image = req.file ? req.file.filename : null;
@@ -443,41 +607,83 @@ app.get('/equipments', async(req, res) => {
     }
 });
 
+// app.delete("/equipments/:id", async (req, res) => {
+//     const id = req.params.id;
+
+//     try {
+//         // 1. Get medicine image filename from DB
+//         const result = await pool.query(
+//             "SELECT image FROM equipments WHERE id = $1",
+//             [id]
+//         );
+
+//         if (result.rows.length === 0) {
+//             return res.status(404).json({ success: false, message: "Not found" });
+//         }
+
+//         const imageFilename = result.rows[0].image;
+
+//         // 2. Delete DB row
+//         await pool.query("DELETE FROM equipments WHERE id = $1", [id]);
+
+//         // 3. Delete physical file from uploads
+//         if (imageFilename) {
+//             const imagePath = path.join(__dirname, "uploads", imageFilename);
+
+//             if (fs.existsSync(imagePath)) {
+//                 fs.unlinkSync(imagePath);
+//             }
+//         }
+
+//         res.json({ success: true, message: "Deleted successfully" });
+
+//     } catch (err) {
+//         console.error("DELETE ERROR:", err);
+//         res.status(500).json({ success: false, message: "Server error" });
+//     }
+// });
+
 app.delete("/equipments/:id", async (req, res) => {
     const id = req.params.id;
 
     try {
-        // 1. Get medicine image filename from DB
+        // 1. Get equipment info (name + image)
         const result = await pool.query(
-            "SELECT image FROM equipments WHERE id = $1",
+            "SELECT name, image FROM equipments WHERE id = $1",
             [id]
         );
 
         if (result.rows.length === 0) {
-            return res.status(404).json({ success: false, message: "Not found" });
+            return res.status(404).json({ success: false, message: "Equipment not found" });
         }
 
-        const imageFilename = result.rows[0].image;
+        const { name, image: imageFilename } = result.rows[0];
 
-        // 2. Delete DB row
+        await pool.query("BEGIN");
+
+        await pool.query("DELETE FROM Records WHERE itemname = $1", [name]);
+
         await pool.query("DELETE FROM equipments WHERE id = $1", [id]);
 
-        // 3. Delete physical file from uploads
+        await pool.query("COMMIT");
+
         if (imageFilename) {
             const imagePath = path.join(__dirname, "uploads", imageFilename);
-
             if (fs.existsSync(imagePath)) {
                 fs.unlinkSync(imagePath);
             }
         }
 
-        res.json({ success: true, message: "Deleted successfully" });
+        res.json({ success: true, message: "Equipment and related records deleted successfully" });
 
     } catch (err) {
+        await pool.query("ROLLBACK");
         console.error("DELETE ERROR:", err);
         res.status(500).json({ success: false, message: "Server error" });
     }
 });
+
+
 
 app.put("/equipments/:id", upload.single("image"), async (req, res) => {
     const id = req.params.id;

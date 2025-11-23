@@ -14,11 +14,14 @@ document.addEventListener('click',(e)=>{
         document.getElementById('filLogArrow').classList.remove('rotate-180');
     }
 
+    if(!document.getElementById('filterRec').contains(e.target) && !document.getElementById('dropRec').contains(e.target)){
+        document.getElementById('dropRec').classList.add('hidden');
+        document.getElementById('filRecArrow').classList.remove('rotate-180');
+    }
+
     if(!document.getElementById('filterEquip').contains(e.target) && !document.getElementById('sortEquip').contains(e.target)){
         document.getElementById('sortEquip').classList.add('hidden');
     }
-
-
 
     if(!document.getElementById('addMedicine').contains(e.target) && !document.getElementById('addMedForm').contains(e.target)){
         document.getElementById('addMedForm').classList.add('hidden');
@@ -32,6 +35,13 @@ document.addEventListener('click',(e)=>{
         document.getElementById('editMedForm').classList.add('hidden');
     }
 
+    if(!document.getElementById('medDispenseBox').contains(e.target)){
+        document.getElementById('medDispense').classList.add('hidden');
+    }
+
+    if(!document.getElementById('equipDispenseBox').contains(e.target)){
+        document.getElementById('equipDispense').classList.add('hidden');
+    }
 
 
     //this is for confirm delete medicine hide it click outside the parent
@@ -461,89 +471,6 @@ function removeImg(formType){
 
 
 
-//  ex data
-// let listmed = [
-//     {
-//         name: "Paracetamol",
-//         description: "For pain and fever relief.",
-//         dosage: "500mg",
-//         quantity: 20,
-//         image: "https://assets.clevelandclinic.org/transform/LargeFeatureImage/c1e14c4c-0f8b-4250-a1eb-3d30d8a6f033/Expired-Medications-1312753473-967x544-1-scaled_jpg"
-//     },
-//     {
-//         name: "Amoxicillin",
-//         description: "Used to treat bacterial infections.",
-//         dosage: "500mg",
-//         quantity: 30,
-//         image: "https://assets.clevelandclinic.org/transform/LargeFeatureImage/c1e14c4c-0f8b-4250-a1eb-3d30d8a6f033/Expired-Medications-1312753473-967x544-1-scaled_jpg"
-//     },
-//     {
-//         name: "Loratadine",
-//         description: "For allergies like sneezing and runny nose.",
-//         dosage: "10mg",
-//         quantity: 10,
-//         image: "https://assets.clevelandclinic.org/transform/LargeFeatureImage/c1e14c4c-0f8b-4250-a1eb-3d30d8a6f033/Expired-Medications-1312753473-967x544-1-scaled_jpg"
-//     },
-//     {
-//         name: "Metformin",
-//         description: "Helps control blood sugar levels.",
-//         dosage: "500mg",
-//         quantity: 60,
-//         image: "https://assets.clevelandclinic.org/transform/LargeFeatureImage/c1e14c4c-0f8b-4250-a1eb-3d30d8a6f033/Expired-Medications-1312753473-967x544-1-scaled_jpg"
-//     },
-//     {
-//         name: "Ibuprofen",
-//         description: "For pain, swelling, or fever.",
-//         dosage: "400mg",
-//         quantity: 25,
-//         image: "https://assets.clevelandclinic.org/transform/LargeFeatureImage/c1e14c4c-0f8b-4250-a1eb-3d30d8a6f033/Expired-Medications-1312753473-967x544-1-scaled_jpg"
-//     },
-//     {
-//         name: "Cetirizine",
-//         description: "Relieves allergy symptoms.",
-//         dosage: "10mg",
-//         quantity: 15,
-//         image: "https://assets.clevelandclinic.org/transform/LargeFeatureImage/c1e14c4c-0f8b-4250-a1eb-3d30d8a6f033/Expired-Medications-1312753473-967x544-1-scaled_jpg"
-//     },
-//     {
-//         name: "Omeprazole",
-//         description: "Reduces stomach acid.",
-//         dosage: "20mg",
-//         quantity: 28,
-//         image: "https://assets.clevelandclinic.org/transform/LargeFeatureImage/c1e14c4c-0f8b-4250-a1eb-3d30d8a6f033/Expired-Medications-1312753473-967x544-1-scaled_jpg"
-//     },
-//     {
-//         name: "Salbutamol",
-//         description: "Helps open airways for easier breathing. Helps open airways for easier breathing. Helps open airways for easier breathing. Helps open airways for easier breathing. Helps open airways for easier breathing.",
-//         dosage: "100 mg",
-//         quantity: 1,
-//         image: "https://assets.clevelandclinic.org/transform/LargeFeatureImage/c1e14c4c-0f8b-4250-a1eb-3d30d8a6f033/Expired-Medications-1312753473-967x544-1-scaled_jpg"
-//     },
-//     {
-//         name: "Cetirizine",
-//         description: "Relieves allergy symptoms.",
-//         dosage: "10mg",
-//         quantity: 15,
-//         image: "https://assets.clevelandclinic.org/transform/LargeFeatureImage/c1e14c4c-0f8b-4250-a1eb-3d30d8a6f033/Expired-Medications-1312753473-967x544-1-scaled_jpg"
-//     },
-//     {
-//         name: "Omeprazole",
-//         description: "Reduces stomach acid.",
-//         dosage: "20mg",
-//         quantity: 28,
-//         image: "https://assets.clevelandclinic.org/transform/LargeFeatureImage/c1e14c4c-0f8b-4250-a1eb-3d30d8a6f033/Expired-Medications-1312753473-967x544-1-scaled_jpg"
-//     },
-//     {
-//         name: "Salbutamol",
-//         description: "Helps open airways for easier breathing. Helps open airways for easier breathing. Helps open airways for easier breathing. Helps open airways for easier breathing. Helps open airways for easier breathing.",
-//         dosage: "100 mg",
-//         quantity: 1,
-//         image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBSyS7ErCSEdDIUsaWomF4UIKcnHsaPzFDLw&s"
-//     }
-// ];
-
-
-// renderListMed();
 
 async function renderListMed(i){
     // alert('kkkk')
@@ -592,7 +519,7 @@ async function renderListMed(i){
                         <div class="w-full p-[15px] absolute bottom-0 left-0 flex flex-row justify-between border-t border-stone-200 text-white font-semibold text-sm">
                             <button class="w-[30%] bg-blue-500 py-2 rounded-xl hover:-translate-y-1 hover:bg-blue-400 shadow-sm" 
                               onclick="editMedicineForm(event,${med.id},'${med.name}','${med.description}','${med.dosage}','${med.quantity}','${med.image}')">Edit</button>
-                            <button class="w-[30%] bg-green-500 py-2 rounded-xl hover:-translate-y-1 hover:bg-green-400 shadow-sm">Dispense</button>
+                            <button onclick="event.stopPropagation();dispenseMed(${med.id}, '${med.name}', '${med.dosage}', ${med.quantity})" class="w-[30%] bg-green-500 py-2 rounded-xl hover:-translate-y-1 hover:bg-green-400 shadow-sm">Dispense</button>
                             <button class="w-[30%] bg-red-500 py-2 rounded-xl hover:-translate-y-1 hover:bg-red-400 shadow-sm" 
                                 onclick="document.querySelectorAll('[id^=medDelBtn]').forEach(el => el.classList.add('hidden'));event.stopPropagation(); document.getElementById('medDelBtn${med.id}').classList.remove('hidden'); 
                                 itemId = 'medDelBtn${med.id}'">Delete</button>
@@ -720,6 +647,87 @@ async function renderListMed(i){
     if(i == ''){
         alert('layout ??')
     }
+}
+
+function dispenseMed(id, name, dosage, qty){
+    document.getElementById('medDispense').classList.remove('hidden');
+    dispenseStudent.value = "";
+
+    dispenseId.value = id;
+    dispenseName.value = name;
+    dispenseDosage.value = dosage;
+    dispenseStock.value = qty;
+    dispenseQuantity.max = qty;
+
+    dispenseQuantity.value = "0"
+
+
+    document.querySelectorAll('.ae')[0].innerHTML = "";
+    document.querySelectorAll('.ae')[1].innerHTML = "";
+    dq.classList.add('border-stone-300');
+    dq.classList.remove('border-red-300');
+    studD.classList.add('border-stone-300');
+    studD.classList.remove('border-red-300');
+}
+
+async function dispenseMedConfirm(studid){
+
+    document.querySelectorAll('.ae')[0].innerHTML = "";
+    document.querySelectorAll('.ae')[1].innerHTML = "";
+    dq.classList.add('border-stone-300');
+    dq.classList.remove('border-red-300');
+    studD.classList.add('border-stone-300');
+    studD.classList.remove('border-red-300');
+
+    if(!studid){
+        studD.classList.remove('border-stone-300')
+        studD.classList.add('border-red-300')
+        document.querySelectorAll('.ae')[0].innerHTML = `<p class="text-sm text-red-400">Fill out this field!</p>`;
+        return
+    }
+
+    if(dispenseQuantity.value == 0){
+        dq.classList.remove('border-stone-300')
+        dq.classList.add('border-red-300')
+        document.querySelectorAll('.ae')[1].innerHTML = `<p class="text-sm text-red-400">Select quantity!</p>`;
+        return
+    }
+    const res = await fetch(`https://students-sample-api.vercel.app/api/students?id=${studid}`);
+    const s = await res.json();
+
+    if(res.status == 404) {
+        studD.classList.remove('border-stone-300')
+        studD.classList.add('border-red-300')
+        document.querySelectorAll('.ae')[0].innerHTML = `<p class="text-sm text-red-400">Student not found!</p>`;
+        return
+    }
+    // alert(dispenseName.value + " "+dispenseDosage.value+ " "+dispenseQuantity.value);
+    try{
+        const resd = await fetch('http://localhost:5000/activity-log',{
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({type: "dispenseM", activity: `Dispensed ${dispenseQuantity.value} tablets of ${dispenseName.value} ${dispenseDosage.value} to student ID ${studid}.`})
+        })
+
+        const resr = await fetch('http://localhost:5000/records',{
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                studentId: studid,
+                type: "get",
+                itemName: `${dispenseName.value} ${dispenseDosage.value}`,
+                qty: dispenseQuantity.value,
+                itemId: dispenseId.value
+            })
+        })
+
+        // alert('success?');
+        location.reload();
+    }catch(error){
+        alert(error);
+    }
+
+    
 }
 
 let itemId = ""; //dont remove this i use this as id for med and equip : > )
@@ -954,7 +962,7 @@ document.getElementById('itemBox').addEventListener('click',()=>{
 document.addEventListener('DOMContentLoaded',()=>{
     let savedlayout = localStorage.getItem('layout');
     
-    if(savedlayout == null){
+    if(savedlayout == null || savedlayout == ""){
         localStorage.setItem('layout','box');
     }
 
@@ -1030,6 +1038,17 @@ function type(i){
             </svg>
         </div>
         `;
+    }else if(i.includes("dispense")){
+        return `
+        <div class="h-[45px] w-[45px] rounded-full bg-[rgba(0,201,121,1)] m-auto flex items-center justify-center" title="add">
+            <svg xmlns="http://www.w3.org/2000/svg" class="size-8" width="200" height="200" viewBox="0 0 24 24">
+                <g fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" color="currentColor">
+                <path d="M4 14h2.395c.294 0 .584.066.847.194l2.042.988c.263.127.553.193.848.193h1.042c1.008 0 1.826.791 1.826 1.767c0 .04-.027.074-.066.085l-2.541.703a1.95 1.95 0 0 1-1.368-.124L6.842 16.75"/>
+                <path d="m13 16.5l4.593-1.411a1.985 1.985 0 0 1 2.204.753c.369.51.219 1.242-.319 1.552l-7.515 4.337a2 2 0 0 1-1.568.187L4 20.02M17.33 4.5a5 5 0 0 1-8.66 5m8.66-5a5 5 0 1 0-8.66 5m8.66-5l-8.66 5"/>
+                </g>
+            </svg>
+        </div>
+        `;
     }
 
 }
@@ -1044,7 +1063,7 @@ async function activity(sort = "all") {
     })
     if(sort == "all") document.querySelectorAll('.slg')[0].classList.add('bg-blue-100');
 
-    document.getElementById('actil').innerHTML = "";
+    
 
     const res = await fetch(`http://localhost:5000/activity-log?type=${sort}`, {credentials: "include"});
     const result = await res.json()
@@ -1056,11 +1075,41 @@ async function activity(sort = "all") {
         return;
     }
 
+    if(result.activities.length == 0){
+        document.getElementById('actList').innerHTML = `<p class="text-[20px] text-stone-500 font-[700] text-center">No activity ${sort} records!</p>`
+        return
+    }
+
+    document.getElementById('actList').innerHTML = `
+        <table class="w-full">
+        <colgroup>
+            <col class="w-[5%]" />
+            <col class="w-[60%]" />
+            <col class="w-[20%]" />
+            <col class="w-[15%]" />
+        </colgroup>
+        <thead class="bg-white sticky top-0">
+            <tr class="text-left">
+            <th class="pb-2 pt-5 border-b-2 border-stone-300 text-center ">Type</th> 
+            <th class="pb-2 pt-5 border-b-2 border-stone-300 ">Activity</th> 
+            <th class="pb-2 pt-5 border-b-2 border-stone-300 ">User</th> 
+            <th class="pb-2 pt-5 border-b-2 border-stone-300 ">Date and Time</th> 
+            </tr>
+        </thead>
+        <tbody id="actil">
+            
+        </tbody>
+        </table>
+    `;
+    document.getElementById('actil').innerHTML = "";
+    const search = document.getElementById('searchLog').value;
     result.activities.forEach((list)=>{
-        document.getElementById('actil').innerHTML += `
-            <tr class="border-b border-stone-300 h-[70px] hover:bg-blue-100">
+
+        if(list.username.includes(search) || list.email.includes(search)){
+           document.getElementById('actil').innerHTML += `
+            <tr class="border-b border-stone-300 h-[70px] hover:bg-[rgb(242,248,255,1)]">
                 <td>${type(list.type)}</td>
-                <td class="text-stone-700 text-[17px] font-[500] pl-3">${list.activity}</td>
+                <td class="text-stone-700 text-[17px] font-[500] pr-5">${list.activity}</td>
                 <td>
                     <div class="flex flex-col leading-none">
                         <p class="text-stone-800 text-[18px] font-[500]">${list.username}</p>
@@ -1074,7 +1123,10 @@ async function activity(sort = "all") {
                     </p>
                 </td>
             </tr>
-        `;
+        `; 
+        }else{
+            document.getElementById('actList').innerHTML = `<p class="text-[20px] text-stone-500 font-[700] text-center">No activity ${search} records!</p>`
+        } 
     });
 }
 
@@ -1127,19 +1179,99 @@ document.getElementById('create_equip').addEventListener('click', async (e) => {
             await fetch('http://localhost:5000/activity-log', {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ type: "addM", activity: `Added medicine ${med_name.value} ${med_dosage.value}`}),
+                body: JSON.stringify({ type: "addE", activity: `Added equipment ${equip_name.value}`}),
                 credentials: "include"
             });
 
             location.reload();
         } else {
-            alert('Failed to add medicine.'+ data.message);
+            alert('Failed to add equipment.'+ data.message);
         }
     } catch (error) {
         console.error('Error:', error);
         alert('Server error occurred.');
     }
 });
+
+function dispenseEquip(id, name, qty){
+    document.getElementById('equipDispense').classList.remove('hidden');
+    dispenseStudente.value = "";
+
+    dispenseIde.value = id;
+    dispenseNamee.value = name;
+    dispenseStocke.value = qty;
+    dispenseQuantitye.max = qty;
+
+    dispenseQuantitye.value = "0"
+
+
+    document.querySelectorAll('.aee')[0].innerHTML = "";
+    document.querySelectorAll('.aee')[1].innerHTML = "";
+    dqe.classList.add('border-stone-300');
+    dqe.classList.remove('border-red-300');
+    studDe.classList.add('border-stone-300');
+    studDe.classList.remove('border-red-300');
+}
+
+async function dispenseEquipConfirm(studid){
+
+    document.querySelectorAll('.aee')[0].innerHTML = "";
+    document.querySelectorAll('.aee')[1].innerHTML = "";
+    dqe.classList.add('border-stone-300');
+    dqe.classList.remove('border-red-300');
+    studDe.classList.add('border-stone-300');
+    studDe.classList.remove('border-red-300');
+
+    if(!studid){
+        studDe.classList.remove('border-stone-300')
+        studDe.classList.add('border-red-300')
+        document.querySelectorAll('.aee')[0].innerHTML = `<p class="text-sm text-red-400">Fill out this field!</p>`;
+        return
+    }
+
+    if(dispenseQuantitye.value == 0){
+        dqe.classList.remove('border-stone-300')
+        dqe.classList.add('border-red-300')
+        document.querySelectorAll('.aee')[1].innerHTML = `<p class="text-sm text-red-400">Select quantity!</p>`;
+        return
+    }
+    const res = await fetch(`https://students-sample-api.vercel.app/api/students?id=${studid}`);
+    const s = await res.json();
+
+    if(res.status == 404) {
+        studDe.classList.remove('border-stone-300')
+        studDe.classList.add('border-red-300')
+        document.querySelectorAll('.aee')[0].innerHTML = `<p class="text-sm text-red-400">Student not found!</p>`;
+        return
+    }
+    // alert(dispenseName.value + " "+dispenseDosage.value+ " "+dispenseQuantity.value);
+    try{
+        const resd = await fetch('http://localhost:5000/activity-log',{
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({type: "dispenseE", activity: `Dispensed ${dispenseQuantitye.value} pcs of ${dispenseNamee.value} to student ID ${studid}.`})
+        })
+
+        const resr = await fetch('http://localhost:5000/records',{
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                studentId: studid,
+                type: "borrowed",
+                itemName: `${dispenseNamee.value}`,
+                qty: dispenseQuantitye.value,
+                itemId: dispenseIde.value
+            })
+        })
+
+        // alert('success?');
+        location.reload();
+    }catch(error){
+        alert(error);
+    }
+
+    
+}
 
 async function confirmDelEquip(e,id) {
     e.stopPropagation();
@@ -1386,13 +1518,13 @@ async function renderListEquip(){
                     <div class="w-full p-[15px] absolute bottom-0 left-0 flex flex-row justify-between border-t border-stone-200 text-white font-semibold text-sm">
                         <button class="w-[30%] bg-blue-500 py-2 rounded-xl hover:-translate-y-1 hover:bg-blue-400 shadow-sm" 
                             onclick="editEquipmentForm(event,${equip.id},'${equip.name}','${equip.description}','${equip.quantity}','${equip.image}')">Edit</button>
-                        <button class="w-[30%] bg-green-500 py-2 rounded-xl hover:-translate-y-1 hover:bg-green-400 shadow-sm">Dispense</button>
+                        <button onclick="event.stopPropagation(); dispenseEquip(${equip.id}, '${equip.name}', ${equip.quantity})" class="w-[30%] bg-green-500 py-2 rounded-xl hover:-translate-y-1 hover:bg-green-400 shadow-sm">Dispense</button>
                         <button class="w-[30%] bg-red-500 py-2 rounded-xl hover:-translate-y-1 hover:bg-red-400 shadow-sm" 
-                            onclick="document.querySelectorAll('[id^=medDelBtn]').forEach(el => el.classList.add('hidden'));event.stopPropagation(); document.getElementById('medDelBtn${equip.id}').classList.remove('hidden'); 
-                            itemId = 'medDelBtn${equip.id}'">Delete</button>
+                            onclick="document.querySelectorAll('[id^=eqDelBtn]').forEach(el => el.classList.add('hidden'));event.stopPropagation(); document.getElementById('eqDelBtn${equip.id}').classList.remove('hidden'); 
+                            itemId = 'eqDelBtn${equip.id}'">Delete</button>
                     </div>
                 </div>
-                <div id="medDelBtn${equip.id}" class="absolute bg-[rgba(249,249,249,0.84)] py-10 h-full w-full top-0 left-0 hidden transition-all duration-500"
+                <div id="eqDelBtn${equip.id}" class="absolute bg-[rgba(249,249,249,0.84)] py-10 h-full w-full top-0 left-0 hidden transition-all duration-500"
                     onclick="this.classList.add('hidden')">
                     <div class="flex flex-col items-center gap-0 h-full">
                         <svg class="size-[100px]" xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 24 24">
@@ -1426,3 +1558,134 @@ async function renderListEquip(){
 }
 
 renderListEquip()
+
+//RECORD
+//////////////////////////////////////////////////////
+document.getElementById('filterRec').addEventListener('click', ()=>{
+    document.getElementById('dropRec').classList.toggle('hidden');
+
+    document.getElementById('filRecArrow').classList.toggle('rotate-180')
+})
+
+
+async function record(sort = "all") {
+
+    document.querySelectorAll('.rlg').forEach(btn =>{
+        btn.classList.remove("bg-blue-100")
+    });
+
+    if(sort == "all") document.querySelectorAll('.rlg')[0].classList.add('bg-blue-100');
+    if(sort == "get") document.querySelectorAll('.rlg')[1].classList.add('bg-blue-100');
+    if(sort == "borrowed") document.querySelectorAll('.rlg')[2].classList.add('bg-blue-100');
+    if(sort == "returned") document.querySelectorAll('.rlg')[3].classList.add('bg-blue-100');
+    if(sort == "itemNotReturned") document.querySelectorAll('.rlg')[4].classList.add('bg-blue-100');
+
+    
+
+    const res = await fetch(`http://localhost:5000/records?type=${sort}`, {credentials: "include"});
+    const result = await res.json()
+
+    console.log(result);
+
+    if (!Array.isArray(result.records)) {
+        console.error("Activities not found:", result);
+        return;
+    }
+
+    const search = document.getElementById('searchRecord').value.trim().toLowerCase();
+
+    if(result.records.length == 0){
+        document.getElementById('rlc').innerHTML = `<p class="text-[20px] text-stone-500 font-[700] text-center">No students ${sort} records!</p>`;
+        return
+    }
+
+    document.getElementById('rlc').innerHTML = `
+        <table class="w-full">
+            <colgroup>
+                <col class="w-[15%]" />
+                <col class="w-[30%]" />
+                <col class="w-[20%]" />
+                <col class="w-[10%]" />
+                <col class="w-[20%]" />
+                <col class="w-[5%]" />
+            </colgroup>
+            <thead class="bg-white sticky top-0">
+                <tr class="text-left">
+                <th class="pb-2 pt-5 border-b-2 border-stone-300 pl-5">Type</th> 
+                <th class="pb-2 pt-5 border-b-2 border-stone-300 ">Item name</th> 
+                <th class="pb-2 pt-5 border-b-2 border-stone-300 ">Student ID</th> 
+                <th class="pb-2 pt-5 border-b-2 border-stone-300 ">Quantity</th> 
+                <th class="pb-2 pt-5 border-b-2 border-stone-300 ">Date and Time</th>
+                <th class="pb-2 pt-5 border-b-2 border-stone-300 "></th>
+                </tr>
+            </thead>
+            <tbody id="recordList">
+                
+            </tbody>
+        </table>
+    `;
+    document.getElementById('recordList').innerHTML = ``;
+    for (const list of result.records) {
+
+        // const studentHTML = await student(list.studentid); // WAIT HERE ✔ rgba(242, 248, 255, 1)
+        const res = await fetch(`https://students-sample-api.vercel.app/api/students?id=${list.studentid}`);
+        const data = await res.json();
+        
+        if(list.studentid.toLowerCase().includes(search) || data.fullName.toLowerCase().includes(search)){
+            document.getElementById('recordList').innerHTML += `
+                <tr class="border-b border-stone-200 h-[70px] hover:bg-[rgb(242,248,255,1)]">
+                    <td>
+                        <div class="w-fit ml-5 hover:scale-[.95]">
+                            ${list.type == "get" ? `<span class="bg-green-100 p-2 px-4 rounded-[50px] text-[16px] font-[500] text-green-500">${list.type.toUpperCase()}</span>` 
+                            : list.type == "borrowed" ? `<span class="bg-orange-100 p-2 px-4 rounded-[50px] text-[16px] font-[500] text-orange-500">${list.type.toUpperCase()}</span>` 
+                            : list.type == "returned" ? `<span class="bg-blue-100 p-2 px-4 rounded-[50px] text-[16px] font-[500] text-blue-500">${list.type.toUpperCase()}</span>` 
+                            : list.type == "not returned" ? `<span class="bg-red-100 p-2 px-4 rounded-[50px] text-[16px] font-[500] text-red-500">${list.type.toUpperCase()}</span>`
+                            :   ""}
+                        </div>
+                    </td>
+                    <td class="text-stone-700 text-[17px] font-[500]">${list.itemname}</td>
+                    <td>
+                        <div>
+                            <div>${list.studentid}</div>
+                            <div>${data.fullName}</div>
+                        </div>
+                    </td>
+                    <td>
+                        ${list.qty}
+                    </td>
+                    <td>
+                        <p class="text-stone-700 text-[16px] font-[500]">
+                            ${new Date(list.datecreated).toLocaleString('en-GB', {day: '2-digit', month: 'long', year: 'numeric', timeZone: 'Asia/Manila'})}, 
+                            ${new Date(list.datecreated).toLocaleString('en-US', {hour: '2-digit', minute: '2-digit', hour12: true, timeZone: 'Asia/Manila'})}
+                        </p>
+                    </td>
+                    <td>
+                        <svg class="size-4 m-auto" xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 20 20">
+                            <path fill="currentColor" d="M10 12a2 2 0 1 1 0-4a2 2 0 0 1 0 4zm0-6a2 2 0 1 1 0-4a2 2 0 0 1 0 4zm0 12a2 2 0 1 1 0-4a2 2 0 0 1 0 4z"/>
+                        </svg>
+
+                        <div>
+
+                        </div>
+                    </td>
+                </tr>
+            `;
+        }else{
+            document.getElementById('rlc').innerHTML = `<p class="text-[20px] text-stone-500 font-[700] text-center">Can't find "${search}" in the records!</p>`;
+        }
+    }
+}
+
+record()
+
+// async function student(sid){
+//     const res = await fetch(`https://students-sample-api.vercel.app/api/students?id=${sid}`);
+//     const data = await res.json();
+
+//     return `
+//         <div>
+//             <p>${data.studentId}</p>
+//             <p>${data.fullName}</p>
+//         </div>
+//     `;
+// }
